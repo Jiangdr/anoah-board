@@ -1,0 +1,50 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Tcplayer视频播放器</title>
+  <script src="http://imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.2.1.js" charset="utf-8"></script>
+  <script>
+    window.onpopstate = function (event) {
+      var tcplayerclosediv = window.parent.document.querySelector('span.tcplayerclosediv');
+      if (tcplayerclosediv) {
+        if (window.tcplayer) {
+          window.tcplayer.destroy();
+        }
+        tcplayerclosediv.click();
+      }
+    }
+    history.pushState({
+      page: 1
+    }, null, location);
+    window.onload = function () {
+      var param = location.search.replace("?param=", "");
+      param = decodeURIComponent(param);
+      //"m3u8_hd": "http://200000621.vod.myqcloud.com/200000621_3cff9e5c9fce11e5b4732d11c2cae25d.f230.av.m3u8?sign=60a116a3d7c8331c11f9a71fb1adb1ce&t=5abf6bcf",
+      //"m3u8_sd": "http://200000621.vod.myqcloud.com/200000621_3cff9e5c9fce11e5b4732d11c2cae25d.f220.av.m3u8?sign=064ffcacf1eac5654ac538728c3dc71d&t=5abf6bcf",
+      //param = "http://200000621.vod.myqcloud.com/200000621_3cff9e5c9fce11e5b4732d11c2cae25d.f230.av.m3u8?sign=60a116a3d7c8331c11f9a71fb1adb1ce&t=5abf6bcf";
+      window.tcplayer = new TcPlayer('tcplayerdiv', {
+        "m3u8": param,
+        "autoplay": true, //iOS下safari浏览器，以及大部分移动端浏览器是不开放视频自动播放这个能力的
+        "coverpic": "",
+        "width": '100%', //视频的显示宽度，请尽量使用视频分辨率宽度
+        "height": '100%' //视频的显示高度，请尽量使用视频分辨率高度
+      });
+    }
+
+  </script>
+  <style>
+    html,
+    body {
+      padding: 0px;
+      margin: 0px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="tcplayerdiv" style="width:100%;width:100%;"></div>
+</body>
+
+</html>
