@@ -22,7 +22,7 @@
         <component
           :is="cp_board.compName"
           :keys-text="cp_board.data"
-          @click.stop.native="btnClick"
+          @btn-click="btnClick"
           class="k-btn-wrap"
           :class="cp_board.class"></component>
       </keep-alive>
@@ -86,13 +86,13 @@
         this.pinyinstr = "";
         this.hanziarray = [];
       },
-      btnClick(e) {
-        console.log(e);
+      btnClick(e, data) {
+
+        this.getinputstr(data.text)
 
       },
       //选中事件
       bnclick: function (event, keystr) {
-        console.log("bnclick");
 
         if (this.type == 0) {
           let key = keystr;
