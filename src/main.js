@@ -31,7 +31,9 @@ Vue.use(Toast);
 
 //mp3player插件依赖toast插件
 //import Mp3player from './plugins/mp3player.js'
-//Vue.use(Mp3player,{'stopclass':'audio-preview','playclass':'audio-preview play','pauseclass':'audio-preview pause'});
+
+Vue.use(Mp3player,{'stopclass':'audio-preview','playclass':'audio-preview play','pauseclass':'audio-preview pause'});
+//
 import Mp3player from './plugins/mp3player/mp3player.js'
 Vue.use(Mp3player);
 
@@ -40,8 +42,8 @@ import AnoahIM from './plugins/anoahim/anoahim.js'
 //console.log(5555,AnoahIM)
 Vue.use(AnoahIM);
 
-import Tcplayer from './plugins/tcplayer/tcplayer.js'
-Vue.use(Tcplayer);
+// import Tcplayer from './plugins/tcplayer/tcplayer.js'
+// Vue.use(Tcplayer);
 
 /* eslint-disable no-new */
 new Vue({

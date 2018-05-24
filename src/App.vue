@@ -5,15 +5,20 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  export default {
+    name: 'App',
+    watch: {
+      $route() {
+        this.$closeanoahim();
+      },
+    },
+  }
 </script>
 
 <style>
-#app {
-  margin: 0;
-  padding: 0;
-  height:100%;
-}
+  #app {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
 </style>

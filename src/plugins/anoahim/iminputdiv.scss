@@ -36,7 +36,7 @@ $lineheight_f: 2.6vh;
   min-height: $lineheight_b*2;
   font-size: $fontsize;
   border: 1px solid #d9d9d9;
-  white-space: pre-wrap;
+  //white-space: pre-wrap;
   word-spacing: -0.5px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   &.red {
@@ -84,6 +84,7 @@ $lineheight_f: 2.6vh;
       border: 1px solid #dddddd;
       background: #dddddd;
       margin-left: 1px;
+
       &.click {
         border: 1px solid #cccccc;
         background: transparent;
@@ -96,6 +97,7 @@ $lineheight_f: 2.6vh;
           min-height: $lineheight_f;
           width: 98%;
           padding: 0 1%;
+          white-space: nowrap;
           &.up {
             border-bottom: 1px solid #000;
           }
@@ -118,7 +120,7 @@ $lineheight_f: 2.6vh;
       min-width: $fontsize;
       text-align: center;
       margin-left: 1px;
-      
+
       padding-left: $lineheight/2;
       background: url("./images/sqrt2_input.png") no-repeat scroll 0 0 transparent;
       background-size:auto 100%;
@@ -155,7 +157,7 @@ $lineheight_f: 2.6vh;
       min-width: $fontsize;
       text-align: center;
       margin-left: 1px;
-      
+
       padding-left: $lineheight/2;
       background: url("./images/sqrt3_input.png") no-repeat scroll 0 0 transparent;
       background-size:auto 100%;
@@ -311,3 +313,11 @@ $lineheight_f: 2.6vh;
     }
   }
 }
+
+.custom {
+  min-height: auto;
+  padding: 4px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
