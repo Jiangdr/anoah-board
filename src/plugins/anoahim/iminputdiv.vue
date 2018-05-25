@@ -74,6 +74,9 @@
 </template>
 
 <script>
+  import Bus from './view/emitBus'
+
+
   export default {
     name: "Iminputdiv",
     // props: ["testdata", "rootdata", "inputarray", "is_correct", "num"],
@@ -129,6 +132,10 @@
         type: Boolean,
         default: false,
       },
+      id: { // 当前组件的id，用于下一空跳转标识
+        type: [Number, String],
+        default: '',
+      },
     },
     data() {
       return {
@@ -136,6 +143,12 @@
       };
     },
     created: function () {
+      Bus.iptComps.push({
+        id: this.id,
+        component: this,
+      });
+
+
       let {el} = this.prev;
       if (this.testdata.mtype == 38) {
         this.maxlength = new Array();
@@ -169,6 +182,7 @@
             this.$addcursor(this, 0, event, i, j, k, dir);
           }
         } else { // 通用环境调动键盘
+          console.log(this);
           this.$addcursor(this, this.boardType, event, i, j, k, dir);
         }
       },

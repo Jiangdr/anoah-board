@@ -39,6 +39,7 @@ AnoahIM.install = function (Vue) {
     instance.vthis = vthis;
     instance.vthis.rootdata.imshow = 1;
     instance.type = type;
+    instance.boardType = type;
     instance.show = true;
     instance.inputarray = vthis.inputarray;
     if (vthis.testdata.mtype == 38) {
@@ -53,13 +54,13 @@ AnoahIM.install = function (Vue) {
       instance.enterflag = 0;
       instance.maxlength = "";
     }
-    instance.addcursor(event, i, j, k, dir);
+    instance.addcursor(event, i, j, k, dir, {id: vthis.id});
   };
 
   Object.defineProperties(Vue.prototype, {
     $_replace: {
       value() {
-        Array.from(this.$el.querySelectorAll('input[type="text"]')).forEach(el => {
+        Array.from(this.$el.querySelectorAll('input[type="text"]')).forEach((el, idx) => {
           let comp = Vue.extend(Iminputdiv),
             div = document.createElement('div'),
             {height, width} = el.getClientRects()[0],
@@ -86,7 +87,8 @@ AnoahIM.install = function (Vue) {
               },
               rects: el.getClientRects()[0],
               custom: true,
-              boardType: valType && valType  ,
+              boardType: valType && valType,
+              id: idx,
             },
           }).$mount();
           // console.log(ipt, 99);

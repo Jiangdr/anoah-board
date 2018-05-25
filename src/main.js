@@ -24,7 +24,7 @@ Vue.use(anoahim)
 Vue.use(mp3player)
 Vue.use(tcplayer)*/
 
-Vue.use(qtivue.default)
+// Vue.use(qtivue.default)
 
 import Toast from './plugins/toast/toast.js'
 Vue.use(Toast);

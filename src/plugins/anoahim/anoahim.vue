@@ -4,18 +4,25 @@
          v-bind:class='{"phone":vthis&&vthis.rootdata.screenflag==2,"pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==0,"book_pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==1}'
          v-show='show'>
 
-      <div class='aimtooldiv'>
-        <div v-if='type==0' class='aimresultdiv'>
-          <div class='pinyin'>{{pinyinstr}}</div>
-          <div class='result'>
-            <ol>
-              <li v-if='key<10' v-for='(value,key) in hanziarray' :key='key' :data-idx='(key+1)'
-                  v-on:click.stop.stop='choicehz(value)'>{{value}}
+      <div class='aimtooldiv clear-fix'>
+        <p class='k-candidate'>{{pinyinstr}}</p>
+        <div class="hiddth-scroll fl">
+          <div class='aimresultdiv'>
+            <ul
+              class='result clear-fix'
+              :style="cp_result">
+              <li
+                class="fl result-li"
+                v-for='(value,key) in cp_candidate'
+                :key='key'
+                :data-idx='(key+1)'
+                :style="cp_result_li"
+                @click.stop.stop='choicehz(value)'>{{value}}
               </li>
-            </ol>
+            </ul>
           </div>
         </div>
-        <div class='aimclosediv' v-on:click.stop='closeclick'>关闭</div>
+        <div class='aimclosediv fr' v-on:click.stop='closeclick'>关闭</div>
       </div>
 
       <keep-alive>
@@ -47,12 +54,15 @@
 <script>
   import comp from './view'
   import keysText from './json/keystext'
+  import pyinput from "./pyinput.json"
+  import Bus from './view/emitBus'
+  import Vue from 'vue'
 
   export default {
     data() {
       return {
         vthis: "", //组件对象this
-        show: true,
+        show: false,
         keypadjson: [],
         type: 0,
         i: 0,
@@ -65,8 +75,13 @@
         capflag: 0, // 大小写标记
         numflag: 0, // 通用键盘的数字标记
         hanziarray: [], // 候选汉字的汉字
+        pyinputjson: {}, //拼音字库
+
+
+        boardType: 'number', // 键盘类型
+        currentId: '', // 当前选中的输入框id
+        candidate: '', // 候选的汉字
         pinyinstr: "", // 候选拼音
-        pyinputjson: {} //拼音字库
       };
     },
     created: function () {
@@ -86,9 +101,35 @@
         this.pinyinstr = "";
         this.hanziarray = [];
       },
-      btnClick(e, data) {
+      /*点击键盘*/
+      btnClick(e, {expect, text}) {
+        /*中文模式*/
+        if (this.boardType === 'chinese') {
+          if (expect === 'delete') {
+            this.pinyinstr = this.pinyinstr.slice(0, this.pinyinstr.length - 1);
+          } else if (expect === 'caseSwitch') {
 
-        this.getinputstr(data.text)
+          } else {
+            this.pinyinstr += text;
+          }
+          return
+        }
+
+        if (expect === 'caseSwitch') {
+          this.isUpper = !this.isUpper;
+          return
+        } else if (['delete', 'fraction'].includes(expect)) {
+          text = expect;
+        } else if (expect === 'next') {
+          if (!Bus.toNext(this.currentId)) { // 没有下一个输入框
+            this.show = false;
+            this.removecursor();
+          }
+          return;
+        }
+
+
+        this.getinputstr(text);
 
       },
       //选中事件
@@ -143,7 +184,7 @@
       },
       //单个拼音转单个汉字，例如输入 'a' 返回 '阿啊呵腌嗄吖锕'
       getSingleHanzi: function (pinyin) {
-        return this.pyinputjson[pinyin] ? this.pyinputjson[pinyin].split("") : "";
+        return
       },
       //查找光标
       findcursor: function () {
@@ -185,7 +226,8 @@
         return {i: -1, j: -1, k: -1, dir: -1};
       },
       //添加光标
-      addcursor: function (event, i, j, k, dir) {
+      addcursor: function (event, i, j, k, dir, {id}) {
+        this.currentId = id;
         // console.log(i, j, k, dir, event);
         let pos = this.findcursor();
         //删除光标
@@ -264,6 +306,7 @@
       },
       //删除光标
       removecursor: function (inputarray = this.inputarray) {
+        this.isUpper = false;
         for (let i = 0; i < inputarray.length; i++) {
           for (let j = 0; j < inputarray[i].length; j++) {
             if (inputarray[i][j].name == "cursor") {
@@ -651,10 +694,6 @@
         }
       }
     },
-    updated: function () {
-      //console.log(this);
-      console.log("anoahim updated");
-    },
     watch: {
       'inputarray'(val, old) {
         val === old || this.removecursor(old);
@@ -664,16 +703,50 @@
     },
     computed: {
       cp_board() {
+        let {boardType} = this;
+        if (boardType === 'chinese') {
+          boardType = 'letters';
+        }
         return Object.assign({
           compName: 'BoardModul',
-        }, keysText.letters)
+        }, keysText[boardType])
+      },
+      cp_candidate() {
+        return (pyinput[this.pinyinstr] || "")
+      },
+      cp_result() {
+        return {
+          width: 10 * this.cp_candidate.length + '%'
+        }
+      },
+      cp_result_li() {
+        return {
+          width: 100 / this.cp_candidate.length + '%'
+        }
       },
     },
   }
 </script>
 
 <style lang='scss' scoped>
-  @import "./anoahim.scss";
+  /*@import "./anoahim.scss";*/
+  .anoahimdiv {
+    box-sizing: border-box;
+    display: block;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 100%;
+    height: 55%;
+    min-height: 300px;
+    position: fixed;
+    z-index: 4000;
+    bottom: 0px;
+    right: 0px;
+    font-size: 4vh;
+    background: #fff;
+    border: 1px solid #cccccc;
+    text-align: center;
+  }
 
   .k-btn-wrap {
     padding: 10px;
@@ -681,6 +754,50 @@
     background: #f5f7f8;
   }
 
+  .aimtooldiv {
+    position: relative;
+    height: 15%;
+    background: #efefef;
+    .hiddth-scroll {
+      height: 100%;
+      overflow: hidden;
+      width: calc(100% - 70px);
+    }
+    .aimresultdiv {
+      height: calc(100% + 20px);
+    }
+    .aimclosediv {
+      width: 70px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .k-candidate {
+      position: absolute;
+      bottom: calc(100% + 1px);
+      left: -1px;
+      padding: 0 10px;
+      height: 80%;
+      background: #efefef;
+    }
+  }
+
+  .aimresultdiv {
+    overflow-x: auto;
+
+    .result {
+      padding: 0 10px;
+      height: calc(100% - 20px);
+      .result-li {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 </style>
 
 <style lang="scss">
@@ -711,11 +828,11 @@
   .anoahimdiv {
     * {
       box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
     ul, li {
       list-style: none;
-      padding: 0;
-      margin: 0;
     }
   }
 
