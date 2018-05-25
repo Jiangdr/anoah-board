@@ -7,7 +7,7 @@ $fontsize_bb: 3.6vh;
 $fontsize_bbb: 4vh;
 //行高
 $lineheight_ss: 3.4vh;
-$lineheight_s: 3.7vh;
+$lineheight_s: 24px;
 $lineheight: 4vh;
 $lineheight_b: 4.3vh;
 $lineheight_bb: 4.6vh;
@@ -36,282 +36,271 @@ $lineheight_f: 2.6vh;
   min-height: $lineheight_b*2;
   font-size: $fontsize;
   border: 1px solid #d9d9d9;
-  //white-space: pre-wrap;
-  word-spacing: -0.5px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   &.red {
     color: $redcolor;
   }
   &.green {
     color: $greencolor;
   }
-  div {
-    display: inline-block;
+  .aime {
+    //display: inline-block;
     min-height: $lineheight_s;
-    vertical-align: middle;
-    &.aime {
-      display: inline-block;
-      min-height: $lineheight_s;
-      vertical-align: middle;
+  }
+  .row {
+    width: 100%;
+    min-height: $lineheight_s;
+    margin-bottom: 1px;
+    padding-left: 3px;
+    display: flex;
+    align-items: center;
+    &.red {
+      color: $redcolor;
     }
-    &.row {
-      display: inline-block;
-      vertical-align: middle;
-      width: 100%;
-      min-height: $lineheight_s;
-      margin-bottom: 1px;
-      padding-left: 3px;
-      &.red {
-        color: $redcolor;
-      }
-      &.green {
-        color: $greencolor;
-      }
+    &.green {
+      color: $greencolor;
     }
-    &.cursor {
-      background: url("./images/cursor.gif") no-repeat scroll 0 0 transparent;
-      width: 1px;
-      margin-right: -1px;
-    }
-    &.equal {
-      color: #000000;
-    }
-    &.fraction {
-      line-height: 0;
-      min-height: $lineheight;
-      min-width: $fontsize;
-      text-align: center;
-      border: 1px solid #dddddd;
-      background: #dddddd;
-      margin-left: 1px;
+  }
+  .cursor {
+    height: 18px;
+    width: 1px;
+    display: inline-block;
+    background: url("./images/cursor.gif") no-repeat scroll 0 0 transparent;
+    margin-left: -1px;
+  }
+  .equal {
+    color: #000000;
+  }
+  .fraction {
+    font-size: 0;
+    text-align: center;
+    background: #dddddd;
+    padding: 1px 3px;
 
-      &.click {
-        border: 1px solid #cccccc;
-        background: transparent;
-      }
-      div {
-        &.enterdiv {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: $lineheight_f;
-          min-height: $lineheight_f;
-          width: 98%;
-          padding: 0 1%;
-          white-space: nowrap;
-          &.up {
-            border-bottom: 1px solid #000;
-          }
-          &.down {
-            border-bottom: 0px solid #000;
-          }
-          div {
-            &.aime {
-              line-height: $lineheight_f;
-              font-size: $fontsize_f;
-              min-height: $lineheight_f;
-            }
-          }
-        }
-      }
-    }
-    &.sqrt2 {
-      line-height: 0;
-      min-height: $lineheight;
-      min-width: $fontsize;
-      text-align: center;
-      margin-left: 1px;
-
-      padding-left: $lineheight/2;
-      background: url("./images/sqrt2_input.png") no-repeat scroll 0 0 transparent;
-      background-size:auto 100%;
-      font-size:0;
-      &.click {
-        background-color: transparent;
-      }
-      div {
-        &.enterdiv {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: $lineheight;
-          min-height: $lineheight;
-          &.up {
-            display:none;
-          }
-          &.down {
-            border-top: $lineheight/20  solid #000000;
-            min-width: $fontsize;
-          }
-          div {
-            &.aime {
-              line-height: $lineheight;
-              font-size: $fontsize;
-              min-height: $lineheight;
-            }
-          }
-        }
-      }
-    }
-    &.sqrt3 {
-      line-height: 0;
-      min-height: $lineheight;
-      min-width: $fontsize;
-      text-align: center;
-      margin-left: 1px;
-
-      padding-left: $lineheight/2;
-      background: url("./images/sqrt3_input.png") no-repeat scroll 0 0 transparent;
-      background-size:auto 100%;
-      font-size:0;
-      &.click {
-        background-color: transparent;
-      }
-      div {
-        &.enterdiv {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: $lineheight;
-          min-height: $lineheight;
-          &.up {
-            display:none;
-          }
-          &.down {
-            border-top: $lineheight/20  solid #000000;
-            min-width: $fontsize;
-          }
-          div {
-            &.aime {
-              line-height: $lineheight;
-              font-size: $fontsize;
-              min-height: $lineheight;
-            }
-          }
-        }
-      }
-    }
-    &.aimsup {
-      line-height: 0;
-      min-height: $lineheight;
-      text-align: center;
+    &.click {
       background: transparent;
-      margin-left: 1px;
-      font-size:0;
-      &.click {
-        min-width: $fontsize;
-        background: transparent;
-        div {
-          &.enterdiv {
-            min-width: $lineheight*0.75;
-            background: transparent;
-            &.up {
-              text-align: center;
-              border: 1px solid #cccccc;
-            }
-            &.down {
-              text-align: center;
-              border: 1px solid #cccccc;
-              min-width: $lineheight/2;
-            }
-          }
-        }
-      }
-      div {
-        &.enterdiv {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: $lineheight;
-          min-height: $lineheight;
-          min-width: $fontsize/2;
-          background: #dddddd;
-          width: auto;
-          &.up {
-            text-align: right;
-          }
-          &.down {
-            text-align: left;
-            line-height: $lineheight/2;
-            min-height: $lineheight/2;
-            vertical-align: top;
-            div {
-              &.aime {
-                line-height: $lineheight_f;
-                font-size: $fontsize_ss;
-                min-height: $lineheight_f;
-              }
-            }
-          }
-          div {
-            &.aime {
-              line-height: $lineheight;
-              font-size: $fontsize;
-              min-height: $lineheight;
-            }
-          }
-        }
-      }
     }
-    &.aimsub {
-
-      line-height: 0;
-      min-height: $lineheight;
-      text-align: center;
-      background: transparent;
-      margin-left: 1px;
-      font-size:0;
-      &.click {
-        min-width: $fontsize;
-        background: transparent;
-        div {
-          &.enterdiv {
-            min-width: $lineheight*0.75;
-            background: transparent;
-            &.up {
-              text-align: center;
-              border: 1px solid #cccccc;
-            }
-            &.down {
-              text-align: center;
-              border: 1px solid #cccccc;
-              min-width: $lineheight/2;
-            }
-          }
-        }
+    .enterdiv {
+      display: block;
+      height: 20px;
+      padding: 2px;
+      white-space: nowrap;
+      min-width: 18px;
+      &.up {
+        border-bottom: 1px solid #000;
       }
-      div {
-        &.enterdiv {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: $lineheight;
-          min-height: $lineheight;
-          min-width: $fontsize/2;
-          background: #dddddd;
-          width: auto;
-          &.up {
-            text-align: right;
-          }
-          &.down {
-            text-align: left;
-            line-height: $lineheight/2;
-            min-height: $lineheight/2;
-            vertical-align: bottom;
-            div {
-              &.aime {
-                line-height: $lineheight_f;
-                font-size: $fontsize_ss;
-                min-height: $lineheight_f;
-              }
-            }
-          }
-          div {
-            &.aime {
-              line-height: $lineheight;
-              font-size: $fontsize;
-              min-height: $lineheight;
-            }
+      &.down {
+      }
+      .aime {
+        display: inline-block;
+        font-size: $fontsize;
+        height: 18px;
+        min-height: auto;
+      }
+
+    }
+  }
+
+  .sqrt2 {
+    line-height: 0;
+    min-height: $lineheight;
+    min-width: $fontsize;
+    text-align: center;
+    margin-left: 1px;
+
+    padding-left: $lineheight/2;
+    background: url("./images/sqrt2_input.png") no-repeat scroll 0 0 transparent;
+    background-size: auto 100%;
+    font-size: 0;
+    &.click {
+      background-color: transparent;
+    }
+    div {
+      &.enterdiv {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: $lineheight;
+        min-height: $lineheight;
+        &.up {
+          display: none;
+        }
+        &.down {
+          border-top: $lineheight/20 solid #000000;
+          min-width: $fontsize;
+        }
+        div {
+          &.aime {
+            line-height: $lineheight;
+            font-size: $fontsize;
+            min-height: $lineheight;
           }
         }
       }
     }
   }
+
+  .sqrt3 {
+    line-height: 0;
+    min-height: $lineheight;
+    min-width: $fontsize;
+    text-align: center;
+    margin-left: 1px;
+
+    padding-left: $lineheight/2;
+    background: url("./images/sqrt3_input.png") no-repeat scroll 0 0 transparent;
+    background-size: auto 100%;
+    font-size: 0;
+    &.click {
+      background-color: transparent;
+    }
+    div {
+      &.enterdiv {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: $lineheight;
+        min-height: $lineheight;
+        &.up {
+          display: none;
+        }
+        &.down {
+          border-top: $lineheight/20 solid #000000;
+          min-width: $fontsize;
+        }
+        div {
+          &.aime {
+            line-height: $lineheight;
+            font-size: $fontsize;
+            min-height: $lineheight;
+          }
+        }
+      }
+    }
+  }
+
+  .aimsup {
+    line-height: 0;
+    min-height: $lineheight;
+    text-align: center;
+    background: transparent;
+    margin-left: 1px;
+    font-size: 0;
+    &.click {
+      min-width: $fontsize;
+      background: transparent;
+      div {
+        &.enterdiv {
+          min-width: $lineheight*0.75;
+          background: transparent;
+          &.up {
+            text-align: center;
+            border: 1px solid #cccccc;
+          }
+          &.down {
+            text-align: center;
+            border: 1px solid #cccccc;
+            min-width: $lineheight/2;
+          }
+        }
+      }
+    }
+    div {
+      &.enterdiv {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: $lineheight;
+        min-height: $lineheight;
+        min-width: $fontsize/2;
+        background: #dddddd;
+        width: auto;
+        &.up {
+          text-align: right;
+        }
+        &.down {
+          text-align: left;
+          line-height: $lineheight/2;
+          min-height: $lineheight/2;
+          vertical-align: top;
+          div {
+            &.aime {
+              line-height: $lineheight_f;
+              font-size: $fontsize_ss;
+              min-height: $lineheight_f;
+            }
+          }
+        }
+        div {
+          &.aime {
+            line-height: $lineheight;
+            font-size: $fontsize;
+            min-height: $lineheight;
+          }
+        }
+      }
+    }
+  }
+
+  .aimsub {
+
+    line-height: 0;
+    min-height: $lineheight;
+    text-align: center;
+    background: transparent;
+    margin-left: 1px;
+    font-size: 0;
+    &.click {
+      min-width: $fontsize;
+      background: transparent;
+      div {
+        &.enterdiv {
+          min-width: $lineheight*0.75;
+          background: transparent;
+          &.up {
+            text-align: center;
+            border: 1px solid #cccccc;
+          }
+          &.down {
+            text-align: center;
+            border: 1px solid #cccccc;
+            min-width: $lineheight/2;
+          }
+        }
+      }
+    }
+    div {
+      &.enterdiv {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: $lineheight;
+        min-height: $lineheight;
+        min-width: $fontsize/2;
+        background: #dddddd;
+        width: auto;
+        &.up {
+          text-align: right;
+        }
+        &.down {
+          text-align: left;
+          line-height: $lineheight/2;
+          min-height: $lineheight/2;
+          vertical-align: bottom;
+          div {
+            &.aime {
+              line-height: $lineheight_f;
+              font-size: $fontsize_ss;
+              min-height: $lineheight_f;
+            }
+          }
+        }
+        div {
+          &.aime {
+            line-height: $lineheight;
+            font-size: $fontsize;
+            min-height: $lineheight;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .custom {

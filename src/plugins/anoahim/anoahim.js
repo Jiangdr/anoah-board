@@ -54,7 +54,7 @@ AnoahIM.install = function (Vue) {
       instance.enterflag = 0;
       instance.maxlength = "";
     }
-    instance.addcursor(event, i, j, k, dir, {id: vthis.id});
+    instance.addcursor(event, i, j, k, dir, {nextId: vthis.nextId});
   };
 
   Object.defineProperties(Vue.prototype, {
@@ -78,6 +78,7 @@ AnoahIM.install = function (Vue) {
           div.style.display = 'inline-block';
           div.style.minWidth = width + 'px';
           div.style.minHeight = height + 'px';
+          div.style.verticalAlign = 'middle';
           el.parentNode.replaceChild(div, el);
           div.appendChild(el);
           let ipt = new comp({
@@ -89,6 +90,7 @@ AnoahIM.install = function (Vue) {
               custom: true,
               boardType: valType && valType,
               id: idx,
+              nextId: ++idx,
             },
           }).$mount();
           // console.log(ipt, 99);

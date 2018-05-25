@@ -5,7 +5,7 @@
          v-show='show'>
 
       <div class='aimtooldiv clear-fix'>
-        <p class='k-candidate'>{{pinyinstr}}</p>
+        <p class='k-candidate' v-show="pinyinstr">{{pinyinstr}}</p>
         <div class="hiddth-scroll fl">
           <div class='aimresultdiv'>
             <ul
@@ -29,6 +29,7 @@
         <component
           :is="cp_board.compName"
           :keys-text="cp_board.data"
+          :is-upper="isUpper"
           @btn-click="btnClick"
           class="k-btn-wrap"
           :class="cp_board.class"></component>
@@ -77,11 +78,12 @@
         hanziarray: [], // 候选汉字的汉字
         pyinputjson: {}, //拼音字库
 
-
+        isUpper: false, // 英文字符是否大写
         boardType: 'number', // 键盘类型
-        currentId: '', // 当前选中的输入框id
+        nextId: '', // 下一个跳转ID
         candidate: '', // 候选的汉字
         pinyinstr: "", // 候选拼音
+        appTop: 0,
       };
     },
     created: function () {
@@ -102,32 +104,40 @@
         this.hanziarray = [];
       },
       /*点击键盘*/
-      btnClick(e, {expect, text}) {
+      btnClick(e, {expect, text, type}) {
+        let {boardType, isUpper} = this;
+        /*点击下一空*/
+        if (expect === 'next') {
+          if (!Bus.toNext(this.nextId)) { // 没有下一个输入框
+            this.show = false;
+            this.removecursor();
+          }
+          return;
+        }
         /*中文模式*/
-        if (this.boardType === 'chinese') {
+        if (boardType === 'chinese') {
           if (expect === 'delete') {
-            this.pinyinstr = this.pinyinstr.slice(0, this.pinyinstr.length - 1);
+            if (this.pinyinstr !== '') {
+              this.pinyinstr = this.pinyinstr.slice(0, this.pinyinstr.length - 1);
+            } else {
+              this.getinputstr('delete');
+            }
           } else if (expect === 'caseSwitch') {
 
           } else {
             this.pinyinstr += text;
           }
           return
+        } else if (boardType = 'letters' && isUpper && type === 'default') {
+          text = text.toUpperCase();
         }
-
+        /*特殊按键*/
         if (expect === 'caseSwitch') {
           this.isUpper = !this.isUpper;
           return
         } else if (['delete', 'fraction'].includes(expect)) {
           text = expect;
-        } else if (expect === 'next') {
-          if (!Bus.toNext(this.currentId)) { // 没有下一个输入框
-            this.show = false;
-            this.removecursor();
-          }
-          return;
         }
-
 
         this.getinputstr(text);
 
@@ -226,9 +236,8 @@
         return {i: -1, j: -1, k: -1, dir: -1};
       },
       //添加光标
-      addcursor: function (event, i, j, k, dir, {id}) {
-        this.currentId = id;
-        // console.log(i, j, k, dir, event);
+      addcursor: function (event, i, j, k, dir, {nextId}) {
+        this.nextId = nextId;
         let pos = this.findcursor();
         //删除光标
         if (pos.i >= 0 && pos.j >= 0) {
@@ -290,8 +299,6 @@
             }
           }
         }
-        //滚动条
-        this.changemainscroll(event == null ? null : event.target);
       },
       //删除公式数组里的光标等位置
       deletefraccur: function (frac) {
@@ -307,6 +314,7 @@
       //删除光标
       removecursor: function (inputarray = this.inputarray) {
         this.isUpper = false;
+        this.pinyinstr = '';
         for (let i = 0; i < inputarray.length; i++) {
           for (let j = 0; j < inputarray[i].length; j++) {
             if (inputarray[i][j].name == "cursor") {
@@ -327,69 +335,6 @@
               }
             }
           }
-        }
-      },
-      //修改滚动条
-      changemainscroll: function (target) {
-        //console.log(333333,target);
-        let qtimain = this.vthis.rootdata.qtimaindiv;
-        if (this.vthis.rootdata.imshow == 1 && qtimain) {
-          this.vthis.$nextTick(() => {
-            //target没传递的时候取光标元素
-            if (target == undefined || target == null) {
-              if (this.type == 1) {
-                target = this.vthis.$el.querySelector("div.numberbox.click");
-              } else {
-                target = this.vthis.$el.querySelector("div.cursor");
-                console.log(44444, target);
-                if (this.enterflag == 1) {
-                  console.log(this.i, this.vthis.$el.parentElement);
-                  target = this.vthis.$el.parentElement.querySelectorAll(
-                    ".qti_fill_input"
-                  )[this.i];
-                  console.log(55555, target);
-                }
-                //console.log(444,target)
-              }
-            }
-            /*
-            console.log(
-              'target top+Height',
-              target.offsetTop + target.offsetHeight
-            );
-
-            console.log(
-              'qtimain scrollTop+height',
-              qtimain.scrollTop + qtimain.offsetHeight
-            );
-            console.log('qtimain scrollHeight', qtimain.scrollHeight);
-            console.log('blank Height', parseInt(qtimain.offsetHeight * 0.45));
-  */
-            //绝对定位坐标需要加父元素offsettop
-            let parenttop = 0;
-            //console.log(1111,target)
-            if (target.style.top != "") {
-              parenttop = target.parentElement.offsetTop;
-            }
-            //console.log(22222)
-            //console.log('parenttop', parenttop, qtimain.scrollTop);
-            //光标位置被键盘遮挡滚动条往下滚
-            if (
-              target.offsetTop + target.offsetHeight + parenttop >=
-              qtimain.offsetHeight + qtimain.scrollTop
-            ) {
-              qtimain.scrollTop =
-                target.offsetTop +
-                target.offsetHeight +
-                parenttop -
-                qtimain.offsetHeight;
-            } else {
-              //光标位在上面被遮挡滚动条往上滚
-              if (qtimain.scrollTop > target.offsetTop) {
-                qtimain.scrollTop = qtimain.scrollTop - target.offsetHeight;
-              }
-            }
-          });
         }
       },
       //关闭按钮
@@ -523,19 +468,23 @@
       },
       //从输入法得到输入的字符
       getinputstr: function (str) {
-        for (let i = 0; i < this.inputarray.length; i++) {
-          //console.log(22222, this.inputarray[i]);
-          //console.log(this.findstrindex(this.inputarray[i],'cursor'));
-          for (let j = 0; j < this.inputarray[i].length; j++) {
-            if (this.inputarray[i][j].name == "cursor") {
+        let l = this.inputarray.length,
+          j_l = null,
+          name = null,
+          temp = null,
+          i = 0,
+          j = 0,
+          poolArr = ["fraction", "sqrt2", "sqrt3", "aimsup", "aimsub"];
+
+        for (; i < l; i++) {
+          j_l = this.inputarray[i].length;
+          for (; j < j_l; j++) {
+            temp = this.inputarray[i][j];
+            name = temp.name;
+
+            if (name == "cursor") {
               //光标位置插入字符
-              if (
-                str == "fraction" ||
-                str == "sqrt2" ||
-                str == "sqrt3" ||
-                str == "aimsup" ||
-                str == "aimsub"
-              ) {
+              if (poolArr.includes(str)) {
                 if (j > 0 && this.inputarray[i][j - 1].name == "fraction") {
                   if (str == "fraction") this.$toast("分数前不能是分数");
                   else this.$toast("公式前不能是分数");
@@ -668,36 +617,64 @@
                 //this.inputarray[i].splice(j, 0, { name: 'aime', value: str });
               }
               return;
-            } else if (
-              this.inputarray[i][j].name == "fraction" ||
-              this.inputarray[i][j].name == "aimsup" ||
-              this.inputarray[i][j].name == "aimsub" ||
-              this.inputarray[i][j].name == "sqrt2" ||
-              this.inputarray[i][j].name == "sqrt3"
-            ) {
+            } else if (poolArr.includes(name)) {
               let flag = this.findfraccurinsert(
-                this.inputarray[i][j].name,
+                name,
                 str,
-                this.inputarray[i][j].value.up,
-                this.inputarray[i][j].value.down
+                temp.value.up,
+                temp.value.down
               );
               if (flag == 0) {
                 this.findfraccurinsert(
-                  this.inputarray[i][j].name,
+                  name,
                   str,
-                  this.inputarray[i][j].value.down,
-                  this.inputarray[i][j].value.up
+                  temp.value.down,
+                  temp.value.up
                 );
               }
             }
           }
         }
-      }
+
+      },
+      /*调整界面到合适位置*/
+      moveSight(e) {
+
+        if (this.show) {
+          this.$nextTick(() => {
+            let {$el} = this,
+              cursor = document.getElementsByClassName('k-board cursor')[0],
+              $el_rect = $el.getBoundingClientRect(),
+              cur_rect = cursor.getBoundingClientRect(),
+              app = document.getElementById('app'),
+              differ = $el_rect.top - cur_rect.bottom;
+            if (differ < 0) {
+              this.appTop = this.appTop + differ - 15;
+              setCss.call(app, {
+                position: 'relative',
+                top: this.appTop + 'px',
+              })
+            }
+
+          });
+
+        }
+      },
+
     },
     watch: {
+      /*监听输入值变化*/
       'inputarray'(val, old) {
         val === old || this.removecursor(old);
+        this.moveSight();
       },
+      /*监听关闭键盘，恢复app位置*/
+      show(val) {
+        val || setCss.call(document.getElementById('app'), {
+          top: this.appTop = 0,
+        });
+      },
+
     },
     mounted() {
     },
@@ -725,6 +702,12 @@
         }
       },
     },
+  }
+
+  function setCss(obj) {
+    Object.entries(obj).forEach(([k, val]) => {
+      this.style[k] = val;
+    })
   }
 </script>
 
@@ -894,6 +877,10 @@
 
     .k-delete {
       height: 50%;
+    }
+
+    .k-hidden {
+      display: none;
     }
 
     .sym-pad {

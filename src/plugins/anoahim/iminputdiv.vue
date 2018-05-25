@@ -4,36 +4,41 @@
     v-if="num==-1"
     class="iminputdiv"
     :class="{custom: custom}"
-    :xx="JSON.stringify(inputarray)"
     v-on:click.stop="addcursor($event,-1,-1,-1,-1)">
 
     <div
       v-for="(value,key) in inputarray"
       :key="key"
-      class="row"
+      class="row clear-fix"
       v-on:click.stop="addcursor($event,key,-1,-1,-1)"
       v-bind:class="{'red':is_correct?is_correct[key]=='0':0,'green':is_correct?is_correct[key]=='1':0}">
       <template v-for="(value1,key1) in value">
-        <div v-if="value1.name=='cursor'" :key="key1" class="cursor"></div>
-        <div
+        <span v-if="value1.name=='cursor'" :key="key1" class="k-board cursor fl"></span>
+        <span
+          class="fl"
           v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
-          :key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
-          v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"
-          v-on:click.stop="addcursor($event,key,key1,-1,-1)">
-          <div class="enterdiv up" v-on:click.stop="addcursor($event,key,key1,-1,'up')">
-            <div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"
-                 v-on:click.stop="addcursor($event,key,key1,key2,'up')">{{value2.value}}
-            </div>
-          </div>
-          <div class="enterdiv down" v-on:click.stop="addcursor($event,key,key1,-1,'down')">
-            <div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"
-                 v-on:click.stop="addcursor($event,key,key1,key2,'down')">{{value2.value}}
-            </div>
-          </div>
-        </div>
-        <div v-else :key="key1" v-bind:class="[value1.name,{'equal':value1.value=='='}]"
-             v-on:click.stop="addcursor($event,key,key1,-1,-1)">{{value1.value}}
-        </div>
+          :key="key1"
+          v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
+          v-on:click.stop="addcursor($event,key,key1,-1,-1)"><span
+          class="enterdiv up"
+          v-on:click.stop="addcursor($event,key,key1,-1,'up')"><span
+          v-for="(value2,key2) in value1.value.up"
+          :key="key2"
+          :class="value2.name"
+          v-on:click.stop="addcursor($event,key,key1,key2,'up')">{{value2.value}}</span></span><span
+          class="enterdiv down"
+          v-on:click.stop="addcursor($event,key,key1,-1,'down')"><span
+          v-for="(value2,key2) in value1.value.down"
+          :key="key2"
+          :class="value2.name"
+          v-on:click.stop="addcursor($event,key,key1,key2,'down')">{{value2.value}}</span></span></span>
+        <span
+          v-else
+          class="fl"
+          :key="key1"
+          v-bind:class="[value1.name,{'equal':value1.value=='='}]"
+          v-on:click.stop="addcursor($event,key,key1,-1,-1)">{{value1.value}}
+        </span>
       </template>
     </div>
 
@@ -52,7 +57,7 @@
 
       <template
         v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?</template>
-      <div v-else-if="value1.name=='cursor'" :key="key1" class="cursor"></div>
+      <div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor"></div>
       <div
         v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
         :key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
@@ -136,6 +141,10 @@
         type: [Number, String],
         default: '',
       },
+      nextId: { // 下一空跳转的id
+        type: [Number, String],
+        default: '',
+      },
     },
     data() {
       return {
@@ -182,7 +191,6 @@
             this.$addcursor(this, 0, event, i, j, k, dir);
           }
         } else { // 通用环境调动键盘
-          console.log(this);
           this.$addcursor(this, this.boardType, event, i, j, k, dir);
         }
       },
@@ -251,8 +259,8 @@
         handler(val) {
           var e = document.createEvent("HTMLEvents");
           e.initEvent("input", true, true);
-          this.prev.el.value = this.formatVal(val[0]);　　　　　　　　　　　　　//这里的click可以换成你想触发的行为
-          this.prev.el.dispatchEvent(e);　　　//这里的clickME可以换成你想触发行为的DOM结点
+          this.prev.el.value = this.formatVal(val[0]);
+          this.prev.el.dispatchEvent(e);
 
         },
       },

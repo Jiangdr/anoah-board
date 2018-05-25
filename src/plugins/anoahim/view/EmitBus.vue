@@ -22,6 +22,7 @@
   //region    //export
 
   export default {
+    name: 'EmitBus',
     data() {
       return {
         iptComps: [],
@@ -29,14 +30,13 @@
     },
     mounted,
     methods: {
-      toNext(id) {
-        let idx = this.iptComps.findIndex(item => item.id === id),
-          comp = null,
-          match = idx !== -1 && (comp = this.iptComps[++idx]);
-        if (match) {
-          comp.component.addcursor({}, 0, -1, -1, -1);
+      toNext(nextId) {
+        console.log(nextId, this.iptComps);
+        let item = this.iptComps.find(item => item.id === nextId);
+        if (item) {
+          item.component.addcursor({}, 0, -1, -1, -1);
         }
-        return match
+        return item !== undefined
       },
     },
 
