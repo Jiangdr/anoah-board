@@ -1,5 +1,12 @@
 <template>
-  <div></div>
+  <div class="ipt-root">
+    <span>
+      <textarea autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+    </span>
+    <span>
+
+    </span>
+  </div>
 </template>
 
 <script>
@@ -22,28 +29,12 @@
   //region    //export
 
   export default {
-    name: 'EmitBus',
+    name: 'AnalogInput',
     data() {
-      return {
-        iptComps: [],
-      }
+      return {}
     },
     mounted,
-    methods: {
-      /*跳转下一空之前*/
-      /*跳转下一空*/
-      toNext(nextId, id) {
-        console.log(nextId, id);
-        this.$emit('before-next', id, (redirect) => {
-          redirect !== undefined && (nextId = redirect);
-        });
-        let item = this.iptComps.find(item => item.id === nextId);
-        if (item) {
-          item.component.addcursor({}, 0, -1, -1, -1);
-        }
-        return item !== undefined
-      },
-    },
+    methods: {},
 
   }
   //endregion

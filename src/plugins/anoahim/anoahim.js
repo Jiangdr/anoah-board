@@ -1,11 +1,11 @@
-import AnoahIMComponent from './anoahim.vue'
+import AnoahIMComponent from './AnoahBoard.vue'
 
 const AnoahIM = {};
-import Iminputdiv from "./iminputdiv.vue";
+import InputBox from "./InputBox.vue";
 
 // 注册AnoahIM
 AnoahIM.install = function (Vue) {
-  Vue.component(Iminputdiv.name, Iminputdiv);
+  Vue.component(InputBox.name, InputBox);
   // 生成一个Vue的子类
   // 同时这个子类也就是组件
   const AnoahIMConstructor = Vue.extend(AnoahIMComponent)

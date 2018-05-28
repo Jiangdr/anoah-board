@@ -1,0 +1,78 @@
+{
+  "symbol_1": {
+    "name": "符号组一",
+    "data": {
+      "ordinary": [
+        [
+          {
+            "text": "=",
+            "type": "symbol"
+          },
+          {
+            "text": ">",
+            "type": "symbol"
+          },
+          {
+            "text": "<",
+            "type": "symbol"
+          },
+          {
+            "text": ">=",
+            "type": "symbol"
+          },
+          {
+            "text": "<=",
+            "type": "symbol"
+          }
+        ],
+        [
+          {
+            "text": "~",
+            "type": "symbol"
+          },
+          {
+            "text": "!=",
+            "type": "symbol"
+          },
+          {
+            "text": "",
+            "type": "hidden"
+          },
+          {
+            "text": "",
+            "type": "hidden"
+          },
+          {
+            "text": "",
+            "type": "hidden"
+          }
+        ],
+        [],
+        []
+      ],
+      "large": [
+        [
+          {
+            "text": "删除",
+            "type": "symbol",
+            "expect": "delete"
+          }
+        ],
+        [
+          {
+            "text": "下一空",
+            "type": "symbol",
+            "expect": "next"
+          }
+        ],
+        [
+          {
+            "text": "返回",
+            "type": "symbol",
+            "expect": "goback"
+          }
+        ]
+      ]
+    }
+  }
+}

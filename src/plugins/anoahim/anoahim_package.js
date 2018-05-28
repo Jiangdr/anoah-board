@@ -1,4 +1,4 @@
-import AnoahIMComponent from './anoahim.vue'
+import AnoahIMComponent from './AnoahBoard.vue'
 
 const AnoahIM = {};
 
@@ -16,7 +16,7 @@ AnoahIM.install = function (Vue) {
   document.body.appendChild(instance.$el)
 
   // 通过Vue的原型注册一个方法
-  // 让所有实例共享这个方法 
+  // 让所有实例共享这个方法
   Vue.prototype.$anoahim = (vthis, type, getinputstr, inputdivblur, inputarray) => {
 
     instance.vthis = vthis;

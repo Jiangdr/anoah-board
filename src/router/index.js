@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/',
       name: 'AnoahIM',
-      component: AnoahIM
+      component: ReplaceIpt
     },
     {
       path: '/repmodel',

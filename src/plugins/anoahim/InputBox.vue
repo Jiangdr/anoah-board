@@ -1,4 +1,5 @@
 <template>
+
   <div
     :style="cp_position"
     v-if="num==-1"
@@ -19,19 +20,28 @@
           v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
           :key="key1"
           v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
-          v-on:click.stop="addcursor($event,key,key1,-1,-1)"><span
-          class="enterdiv up"
-          v-on:click.stop="addcursor($event,key,key1,-1,'up')"><span
-          v-for="(value2,key2) in value1.value.up"
-          :key="key2"
-          :class="value2.name"
-          v-on:click.stop="addcursor($event,key,key1,key2,'up')">{{value2.value}}</span></span><span
-          class="enterdiv down"
-          v-on:click.stop="addcursor($event,key,key1,-1,'down')"><span
-          v-for="(value2,key2) in value1.value.down"
-          :key="key2"
-          :class="value2.name"
-          v-on:click.stop="addcursor($event,key,key1,key2,'down')">{{value2.value}}</span></span></span>
+          v-on:click.stop="addcursor($event,key,key1,-1,-1)">
+
+          <span
+            class="enterdiv up"
+            v-on:click.stop="addcursor($event,key,key1,-1,'up')">
+            <span
+              v-for="(value2,key2) in value1.value.up"
+              :key="key2"
+              :class="value2.name"
+              v-on:click.stop="addcursor($event,key,key1,key2,'up')">{{value2.value}}</span>
+          </span>
+          <span
+            class="enterdiv down"
+            v-on:click.stop="addcursor($event,key,key1,-1,'down')">
+            <span
+              v-for="(value2,key2) in value1.value.down"
+              :key="key2"
+              class="k-board"
+              :class="value2.name"
+              v-on:click.stop="addcursor($event,key,key1,key2,'down')">{{value2.value}}</span>
+          </span>
+        </span>
         <span
           v-else
           class="fl"
@@ -44,7 +54,7 @@
 
   </div>
 
-  <span
+  <div
     v-else
     :key="num"
     class="iminputdiv qti_fill_input"
@@ -56,7 +66,8 @@
     <template v-else v-for="(value1,key1) in inputarray[num]">
 
       <template
-        v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?</template>
+        v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?
+      </template>
       <div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor"></div>
       <div
         v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
@@ -65,17 +76,23 @@
         v-on:click.stop="addcursor($event,num,key1,-1,-1)">
         <div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">
           <div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"
-               v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}</div>
-        </div><div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">
+               v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}
+          </div>
+        </div>
+        <div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">
           <div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"
-               v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}</div>
+               v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}
+          </div>
         </div>
       </div>
-      <div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">{{value1.value}}</div>
+      <div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">
+        {{value1.value}}
+      </div>
 
     </template>
 
-  </span>
+  </div>
+
 </template>
 
 <script>
@@ -83,13 +100,9 @@
 
 
   export default {
-    name: "Iminputdiv",
+    name: 'InputBox',
     // props: ["testdata", "rootdata", "inputarray", "is_correct", "num"],
     props: {
-      boardType: { // 键盘类型
-        type: [Number, String],
-        default: 0,
-      },
       testdata: {
         type: Object,
         default() {
@@ -108,12 +121,6 @@
         type: Object,
         default() {
           return {imshow: 0}
-        },
-      },
-      inputarray: { // 输入的字符
-        type: Array,
-        default() {
-          return [[]]
         },
       },
       num: { //
@@ -145,10 +152,20 @@
         type: [Number, String],
         default: '',
       },
+      boardType: { // 键盘类型
+        type: [Number, String],
+        default: 0,
+      },
+      value: {
+        type: [String, Number],
+        default: '',
+      },
+
     },
     data() {
       return {
-        maxlength: ""
+        maxlength: "",
+        inputarray: [[]],
       };
     },
     created: function () {
@@ -156,9 +173,15 @@
         id: this.id,
         component: this,
       });
+      /**/
+      Bus.$on('before-next', (id, callback) => {
+        id === this.id && this.$emit('before-next', callback, {
+          currentId: this.id,
+        });
+      });
 
-
-      let {el} = this.prev;
+      let {el} = this.prev,
+        initial = this.value.toString();
       if (this.testdata.mtype == 38) {
         this.maxlength = new Array();
         for (let i = 0; i < this.testdata.manswer.length; i++) {
@@ -168,12 +191,13 @@
         this.maxlength = "";
       }
       if (el && el.value.length > 0) {
-        for (let v of el.value) {
-          this.inputarray[0].push({
-            name: 'aime',
-            value: v,
-          })
-        }
+        initial = el.value;
+      }
+      for (let v of initial) {
+        this.inputarray[0].push({
+          name: 'aime',
+          value: v,
+        });
       }
     },
     methods: {
@@ -239,6 +263,12 @@
         });
         return res
       },
+      /*转移焦点*/
+      toNext(nextId = this.nextId) {
+        if (!Bus.toNext(nextId)) { // 没有下一个输入框
+          this.$closeanoahim();
+        }
+      },
     },
     computed: {
       cp_position() {
@@ -257,17 +287,28 @@
       inputarray: {
         deep: true,
         handler(val) {
-          var e = document.createEvent("HTMLEvents");
-          e.initEvent("input", true, true);
-          this.prev.el.value = this.formatVal(val[0]);
-          this.prev.el.dispatchEvent(e);
-
+          val = this.formatVal(val[0]);
+          if (this.prev.el) {
+            let e = document.createEvent("HTMLEvents");
+            e.initEvent("input", true, true);
+            this.prev.el.value = val;
+            this.prev.el.dispatchEvent(e);
+          }
+          this.$emit('input', val);
         },
+      },
+      value(val) {
+        this.$emit('after-change', this.toNext, {
+          value: val,
+        });
       },
     },
   };
 </script>
+
 <style lang='scss' scoped>
   @import "./iminputdiv.scss";
+
+
 </style>
 

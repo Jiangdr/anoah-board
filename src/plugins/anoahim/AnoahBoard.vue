@@ -1,8 +1,9 @@
 <template>
   <transition name='fade'>
-    <div class='anoahimdiv'
-         v-bind:class='{"phone":vthis&&vthis.rootdata.screenflag==2,"pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==0,"book_pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==1}'
-         v-show='show'>
+    <div
+      class='anoahimdiv'
+      v-bind:class='{"phone":vthis&&vthis.rootdata.screenflag==2,"pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==0,"book_pad":vthis&&vthis.rootdata.screenflag==1&&vthis.rootdata.bookflag==1}'
+      v-show='show'>
 
       <div class='aimtooldiv clear-fix'>
         <p class='k-candidate' v-show="pinyinstr">{{pinyinstr}}</p>
@@ -25,15 +26,14 @@
         <div class='aimclosediv fr' v-on:click.stop='closeclick'>关闭</div>
       </div>
 
-      <keep-alive>
-        <component
-          :is="cp_board.compName"
-          :keys-text="cp_board.data"
-          :is-upper="isUpper"
-          @btn-click="btnClick"
-          class="k-btn-wrap"
-          :class="cp_board.class"></component>
-      </keep-alive>
+      <component
+        :is="cp_board.compName"
+        :keys-text="cp_board.keysText"
+        :symbols-text="cp_board.symbols"
+        :is-upper="isUpper"
+        :model="boardModel"
+        @btn-click="btnClick"
+        :class="cp_board.class"></component>
 
       <!--<div-->
       <!--v-for='(value,key) in (numflag == 1 && type == 0) ? keypadjson[type].numsrc : keypadjson[type].src'-->
@@ -53,11 +53,12 @@
 </template>
 
 <script>
-  import comp from './view'
-  import keysText from './json/keystext'
+  import * as comp from './view'
+  import keysTextJson from './json/keystext'
+  import symbolJson from './json/symbols'
   import pyinput from "./pyinput.json"
   import Bus from './view/emitBus'
-  import Vue from 'vue'
+
 
   export default {
     data() {
@@ -71,7 +72,7 @@
         maxlength: "",
         closeimfun: function () {
         },
-        inputarray: "",
+        inputarray: [],
         pinyinflag: 1, // 拼音输入标记
         capflag: 0, // 大小写标记
         numflag: 0, // 通用键盘的数字标记
@@ -80,16 +81,17 @@
 
         isUpper: false, // 英文字符是否大写
         boardType: 'number', // 键盘类型
+        symbolType: 'symbol_1', // 符号类型
         nextId: '', // 下一个跳转ID
         candidate: '', // 候选的汉字
-        pinyinstr: "", // 候选拼音
-        appTop: 0,
+        pinyinstr: '', // 候选拼音
+        boardModel: 'text', // 候选拼音
       };
     },
     created: function () {
       let self = this;
-      this.pyinputjson = require("./pyinput.json");
-      this.keypadjson = require("./keypad.json");
+      // this.pyinputjson = require("./pyinput.json");
+      // this.keypadjson = require("./keypad.json");
       window.addEventListener('click', function (e) {
         self.show && (e.path.includes(self.$el) || self.closeclick());
       }, false);
@@ -108,10 +110,18 @@
         let {boardType, isUpper} = this;
         /*点击下一空*/
         if (expect === 'next') {
-          if (!Bus.toNext(this.nextId)) { // 没有下一个输入框
+          if (!Bus.toNext(this.nextId, this.vthis.id)) { // 没有下一个输入框
             this.show = false;
             this.removecursor();
           }
+          return;
+        }
+        /*点击切换符号键盘*/
+        if (expect === 'showSymbol') {
+          this.boardModel = 'symbol';
+          return;
+        } else if (expect === 'goback') {
+          this.boardModel = 'text';
           return;
         }
         /*中文模式*/
@@ -262,7 +272,6 @@
           } else {
             if (dir == -1) {
               //单个元素点击
-              console.log("单个元素点击");
               let aime = event.target;
               if (pos.i == i && pos.j < j) {
                 j--;
@@ -339,7 +348,6 @@
       },
       //关闭按钮
       closeclick: function (event) {
-        console.log("closeclick", this.vthis);
         this.show = false;
         this.vthis.rootdata.imshow = 0;
         this.removecursor();
@@ -404,7 +412,6 @@
             }
           }
         }
-        console.log("insertstr", index, array[index].name);
 
         //console.log("this.i", this.i, "length", this.inputarray[this.i].length,"maxlength",this.maxlength);
         if (this.maxlength) {
@@ -635,30 +642,38 @@
             }
           }
         }
-
       },
       /*调整界面到合适位置*/
       moveSight(e) {
+        this.$nextTick(() => {
+          let app = document.getElementById('app'),
+            {$el} = this,
+            $el_rect = $el.getBoundingClientRect();
 
-        if (this.show) {
-          this.$nextTick(() => {
-            let {$el} = this,
-              cursor = document.getElementsByClassName('k-board cursor')[0],
-              $el_rect = $el.getBoundingClientRect(),
-              cur_rect = cursor.getBoundingClientRect(),
-              app = document.getElementById('app'),
-              differ = $el_rect.top - cur_rect.bottom;
-            if (differ < 0) {
-              this.appTop = this.appTop + differ - 15;
-              setCss.call(app, {
-                position: 'relative',
-                top: this.appTop + 'px',
-              })
+          if (this.show) {
+            let cursor = document.getElementsByClassName('k-board cursor')[0];
+            if (!cursor) return;
+            let cur_rect = cursor.getBoundingClientRect(),
+              differ = $el_rect.top - cur_rect.bottom,
+              appTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset,
+              endTop = appTop;
+            setCss.call(app, {
+              marginBottom: $el_rect.height + 'px',
+            });
+
+            if (differ < 0) { // 光标低于键盘时
+              endTop = appTop - differ + 15;
+            } else if (cur_rect.top < 0) { // 光标高于屏幕
+              endTop = appTop + cur_rect.top - 20;
             }
 
-          });
-
-        }
+            scrollTo((endTop - appTop) / 200 * 16, appTop, endTop)
+          } else {
+            setCss.call(app, {
+              marginBottom: '0px',
+            });
+          }
+        });
       },
 
     },
@@ -666,6 +681,7 @@
       /*监听输入值变化*/
       'inputarray'(val, old) {
         val === old || this.removecursor(old);
+
         this.moveSight();
       },
       /*监听关闭键盘，恢复app位置*/
@@ -680,13 +696,27 @@
     },
     computed: {
       cp_board() {
-        let {boardType} = this;
+        let {boardType, symbolType} = this,
+          symbols = symbolJson[symbolType].data,
+          keysText = keysTextJson[boardType].data;
         if (boardType === 'chinese') {
           boardType = 'letters';
         }
-        return Object.assign({
+        if (symbols) {
+          let rep = keysText.ordinary[keysText.ordinary.length - 1][0],
+            temp = Object.assign({}, rep);
+          Object.assign(rep, {
+            text: '更多',
+            expect: "showSymbol"
+          })
+        }
+
+
+        return {
           compName: 'BoardModul',
-        }, keysText[boardType])
+          symbols,
+          keysText,
+        }
       },
       cp_candidate() {
         return (pyinput[this.pinyinstr] || "")
@@ -709,10 +739,27 @@
       this.style[k] = val;
     })
   }
+
+  function scrollTo(step, appTop, endTop) {
+    if (step !== 0) {
+      let t = appTop + step;
+      if ((step > 0 && t > endTop) || (step < 0 && t < endTop)) {
+        t = endTop;
+      } else {
+        setTimeout(() => {
+          scrollTo(step, t, endTop);
+        }, 20);
+      }
+      document.body.scrollTop = t;
+      document.documentElement.scrollTop = t;
+    }
+  }
 </script>
 
 <style lang='scss' scoped>
   /*@import "./anoahim.scss";*/
+
+
   .anoahimdiv {
     box-sizing: border-box;
     display: block;
@@ -734,7 +781,6 @@
   .k-btn-wrap {
     padding: 10px;
     height: 85%;
-    background: #f5f7f8;
   }
 
   .aimtooldiv {
@@ -979,4 +1025,17 @@
     }
   }
 
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s;
+  }
+
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-leave-to {
+    opacity: 0;
+  }
 </style>
