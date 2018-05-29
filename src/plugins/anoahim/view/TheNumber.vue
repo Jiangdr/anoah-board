@@ -115,24 +115,26 @@
           aside = {...group, ...defaultSymbol},
           aside_keys = Object.keys(aside),
           intruder = {},
-          result = null;
-        /*选择10个干扰符号*/
-        Array.from({length: 10}).map(() => {
-          let k = aside_keys.splice(Math.floor(Math.random() * aside_keys.length), 1)[0];
-          return intruder[k] = aside[k];
-        });
-        result = Object.entries(Object.assign({}, required, intruder)).slice(0, 10).map(([k, itm]) => {
-          return Object.assign({}, itm, {
-            text: k,
-          })
-        });
-        if (group.length < 1) {
+          cache = Bus.iptComps.find(itm => itm._uid === Bus.selectedUid) || {},
+          result = cache.symbol;
 
+        /*选择10个干扰符号*/
+        if (!result) {
+          Array.from({length: 10}).forEach(() => {
+            let k = aside_keys.splice(Math.floor(Math.random() * aside_keys.length), 1)[0];
+            return intruder[k] = aside[k];
+          });
+          cache.symbol = result = Object.entries(Object.assign({}, required, intruder)).slice(0, 10).map(([k, itm]) => {
+            return Object.assign({}, itm, {
+              text: k,
+            })
+          });
+          result.forEach((itm, idx, arr) => {
+            let j = Math.floor(Math.random() * 10);
+            [arr[idx], arr[j]] = [arr[j], arr[idx]];
+          });
         }
-        result.forEach((itm, idx, arr) => {
-          let j = Math.floor(Math.random() * 10);
-          [arr[idx], arr[j]] = [arr[j], arr[idx]];
-        });
+
         console.log(required);
         return {
           ordinary: ordinary.map((arr, idx) => {
@@ -164,6 +166,7 @@
       },
     },
   }
+
   //endregion
 
   /******************/

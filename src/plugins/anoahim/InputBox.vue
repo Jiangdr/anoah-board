@@ -55,41 +55,41 @@
   </div>
 
   <!--<div-->
-    <!--v-else-->
-    <!--:key="num"-->
-    <!--class="iminputdiv qti_fill_input"-->
-    <!--v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"-->
-    <!--v-on:click.stop="addcursor($event,num,-1,-1,-1)">-->
+  <!--v-else-->
+  <!--:key="num"-->
+  <!--class="iminputdiv qti_fill_input"-->
+  <!--v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"-->
+  <!--v-on:click.stop="addcursor($event,num,-1,-1,-1)">-->
 
-    <!--<template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>-->
+  <!--<template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>-->
 
-    <!--&lt;!&ndash;<template v-else v-for="(value1,key1) in inputarray[num]">&ndash;&gt;-->
+  <!--&lt;!&ndash;<template v-else v-for="(value1,key1) in inputarray[num]">&ndash;&gt;-->
 
-      <!--&lt;!&ndash;<template&ndash;&gt;-->
-        <!--&lt;!&ndash;v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?&ndash;&gt;-->
-      <!--&lt;!&ndash;</template>&ndash;&gt;-->
-      <!--&lt;!&ndash;<div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor">1</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;<div&ndash;&gt;-->
-        <!--&lt;!&ndash;v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"&ndash;&gt;-->
-        <!--&lt;!&ndash;:key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"&ndash;&gt;-->
-        <!--&lt;!&ndash;v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"&ndash;&gt;-->
-        <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">&ndash;&gt;-->
-          <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"&ndash;&gt;-->
-               <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">&ndash;&gt;-->
-          <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"&ndash;&gt;-->
-               <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;<div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
-        <!--&lt;!&ndash;{{value1.value}}&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;<template&ndash;&gt;-->
+  <!--&lt;!&ndash;v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?&ndash;&gt;-->
+  <!--&lt;!&ndash;</template>&ndash;&gt;-->
+  <!--&lt;!&ndash;<div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor">1</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;<div&ndash;&gt;-->
+  <!--&lt;!&ndash;v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"&ndash;&gt;-->
+  <!--&lt;!&ndash;:key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"&ndash;&gt;-->
+  <!--&lt;!&ndash;v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"&ndash;&gt;-->
+  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
+  <!--&lt;!&ndash;<div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">&ndash;&gt;-->
+  <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"&ndash;&gt;-->
+  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;<div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">&ndash;&gt;-->
+  <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"&ndash;&gt;-->
+  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+  <!--&lt;!&ndash;<div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
+  <!--&lt;!&ndash;{{value1.value}}&ndash;&gt;-->
+  <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-    <!--&lt;!&ndash;</template>&ndash;&gt;-->
+  <!--&lt;!&ndash;</template>&ndash;&gt;-->
 
   <!--</div>-->
 
@@ -180,9 +180,11 @@
       }, // 学科编号
     },
     created: function () {
+      console.log(this._uid);
       Bus.iptComps.push({
         id: this.id,
         component: this,
+        _uid: this._uid,
       });
       /**/
       Bus.$on('before-next', (id, callback) => {
@@ -275,6 +277,7 @@
               break;
           }
 
+          Bus.selectedUid = this._uid;
           this.$addcursor(this, boardType, event, i, j, k, dir, {
             gId
           });

@@ -26,6 +26,7 @@
     data() {
       return {
         iptComps: [],
+        selectedUid: '',
       }
     },
     mounted,

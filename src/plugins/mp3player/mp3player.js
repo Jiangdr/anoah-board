@@ -1,4 +1,4 @@
-import Mp3playerComponent from './Mp3player.vue'
+import Mp3playerComponent from './mp3player'
 
 const Mp3player = {};
 
@@ -20,7 +20,7 @@ Mp3player.install = function (Vue) {
   instance.$el.onerror = this.playererror;
 */
   // 通过Vue的原型注册一个方法
-  // 让所有实例共享这个方法 
+  // 让所有实例共享这个方法
   Vue.prototype.$mp3player = (url, target) => {
     //console.log(2222222,target)
     instance.playclick(url, target);
