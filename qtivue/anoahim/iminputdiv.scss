@@ -1,0 +1,313 @@
+//字体
+$fontsize_ss: 2.4vh;
+$fontsize_s: 2.7vh;
+$fontsize: 3vh;
+$fontsize_b: 3.3vh;
+$fontsize_bb: 3.6vh;
+$fontsize_bbb: 4vh;
+//行高
+$lineheight_ss: 3.4vh;
+$lineheight_s: 3.7vh;
+$lineheight: 4vh;
+$lineheight_b: 4.3vh;
+$lineheight_bb: 4.6vh;
+//圆角
+$borderradius: 0.5vh;
+//填空点宽度和下划线颜色
+$poswidth: 12vh;
+$poscolor: #53a1bc;
+//div margin padding
+$divmargin: 1vh;
+
+//颜色
+$greencolor: #00b121;
+$bluecolor: #458bc3;
+$redcolor: #fe5757;
+//脱式计算分数里的字体行高
+$fontsize_f: 2.4vh;
+$lineheight_f: 2.6vh;
+
+.iminputdiv {
+  color: #333333;
+  display: block;
+  border: 3px solid #eeeeee;
+  padding: $divmargin/2 $divmargin/2 $divmargin/2 0;
+  width: 99%;
+  min-height: $lineheight_b*2;
+  font-size: $fontsize;
+  border: 1px solid #d9d9d9;
+  white-space: pre-wrap;
+  word-spacing: -0.5px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  &.red {
+    color: $redcolor;
+  }
+  &.green {
+    color: $greencolor;
+  }
+  div {
+    display: inline-block;
+    min-height: $lineheight_s;
+    vertical-align: middle;
+    &.aime {
+      display: inline-block;
+      min-height: $lineheight_s;
+      vertical-align: middle;
+    }
+    &.row {
+      display: inline-block;
+      vertical-align: middle;
+      width: 100%;
+      min-height: $lineheight_s;
+      margin-bottom: 1px;
+      padding-left: 3px;
+      &.red {
+        color: $redcolor;
+      }
+      &.green {
+        color: $greencolor;
+      }
+    }
+    &.cursor {
+      background: url("./images/cursor.gif") no-repeat scroll 0 0 transparent;
+      width: 1px;
+      margin-right: -1px;
+    }
+    &.equal {
+      color: #000000;
+    }
+    &.fraction {
+      line-height: 0;
+      min-height: $lineheight;
+      min-width: $fontsize;
+      text-align: center;
+      border: 1px solid #dddddd;
+      background: #dddddd;
+      margin-left: 1px;
+      &.click {
+        border: 1px solid #cccccc;
+        background: transparent;
+      }
+      div {
+        &.enterdiv {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: $lineheight_f;
+          min-height: $lineheight_f;
+          width: 98%;
+          padding: 0 1%;
+          &.up {
+            border-bottom: 1px solid #000;
+          }
+          &.down {
+            border-bottom: 0px solid #000;
+          }
+          div {
+            &.aime {
+              line-height: $lineheight_f;
+              font-size: $fontsize_f;
+              min-height: $lineheight_f;
+            }
+          }
+        }
+      }
+    }
+    &.sqrt2 {
+      line-height: 0;
+      min-height: $lineheight;
+      min-width: $fontsize;
+      text-align: center;
+      margin-left: 1px;
+      
+      padding-left: $lineheight/2;
+      background: url("./images/sqrt2_input.png") no-repeat scroll 0 0 transparent;
+      background-size:auto 100%;
+      font-size:0;
+      &.click {
+        background-color: transparent;
+      }
+      div {
+        &.enterdiv {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: $lineheight;
+          min-height: $lineheight;
+          &.up {
+            display:none;
+          }
+          &.down {
+            border-top: $lineheight/20  solid #000000;
+            min-width: $fontsize;
+          }
+          div {
+            &.aime {
+              line-height: $lineheight;
+              font-size: $fontsize;
+              min-height: $lineheight;
+            }
+          }
+        }
+      }
+    }
+    &.sqrt3 {
+      line-height: 0;
+      min-height: $lineheight;
+      min-width: $fontsize;
+      text-align: center;
+      margin-left: 1px;
+      
+      padding-left: $lineheight/2;
+      background: url("./images/sqrt3_input.png") no-repeat scroll 0 0 transparent;
+      background-size:auto 100%;
+      font-size:0;
+      &.click {
+        background-color: transparent;
+      }
+      div {
+        &.enterdiv {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: $lineheight;
+          min-height: $lineheight;
+          &.up {
+            display:none;
+          }
+          &.down {
+            border-top: $lineheight/20  solid #000000;
+            min-width: $fontsize;
+          }
+          div {
+            &.aime {
+              line-height: $lineheight;
+              font-size: $fontsize;
+              min-height: $lineheight;
+            }
+          }
+        }
+      }
+    }
+    &.aimsup {
+      line-height: 0;
+      min-height: $lineheight;
+      text-align: center;
+      background: transparent;
+      margin-left: 1px;
+      font-size:0;
+      &.click {
+        min-width: $fontsize;
+        background: transparent;
+        div {
+          &.enterdiv {
+            min-width: $lineheight*0.75;
+            background: transparent;
+            &.up {
+              text-align: center;
+              border: 1px solid #cccccc;
+            }
+            &.down {
+              text-align: center;
+              border: 1px solid #cccccc;
+              min-width: $lineheight/2;
+            }
+          }
+        }
+      }
+      div {
+        &.enterdiv {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: $lineheight;
+          min-height: $lineheight;
+          min-width: $fontsize/2;
+          background: #dddddd;
+          width: auto;
+          &.up {
+            text-align: right;
+          }
+          &.down {
+            text-align: left;
+            line-height: $lineheight/2;
+            min-height: $lineheight/2;
+            vertical-align: top;
+            div {
+              &.aime {
+                line-height: $lineheight_f;
+                font-size: $fontsize_ss;
+                min-height: $lineheight_f;
+              }
+            }
+          }
+          div {
+            &.aime {
+              line-height: $lineheight;
+              font-size: $fontsize;
+              min-height: $lineheight;
+            }
+          }
+        }
+      }
+    }
+    &.aimsub {
+
+      line-height: 0;
+      min-height: $lineheight;
+      text-align: center;
+      background: transparent;
+      margin-left: 1px;
+      font-size:0;
+      &.click {
+        min-width: $fontsize;
+        background: transparent;
+        div {
+          &.enterdiv {
+            min-width: $lineheight*0.75;
+            background: transparent;
+            &.up {
+              text-align: center;
+              border: 1px solid #cccccc;
+            }
+            &.down {
+              text-align: center;
+              border: 1px solid #cccccc;
+              min-width: $lineheight/2;
+            }
+          }
+        }
+      }
+      div {
+        &.enterdiv {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: $lineheight;
+          min-height: $lineheight;
+          min-width: $fontsize/2;
+          background: #dddddd;
+          width: auto;
+          &.up {
+            text-align: right;
+          }
+          &.down {
+            text-align: left;
+            line-height: $lineheight/2;
+            min-height: $lineheight/2;
+            vertical-align: bottom;
+            div {
+              &.aime {
+                line-height: $lineheight_f;
+                font-size: $fontsize_ss;
+                min-height: $lineheight_f;
+              }
+            }
+          }
+          div {
+            &.aime {
+              line-height: $lineheight;
+              font-size: $fontsize;
+              min-height: $lineheight;
+            }
+          }
+        }
+      }
+    }
+  }
+}

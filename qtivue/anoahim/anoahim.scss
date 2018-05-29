@@ -1,0 +1,245 @@
+
+div {
+  font-family: "customFont", "Microsoft YaHei", "sans serif";
+  &.anoahimdiv {
+    box-sizing: border-box;
+    display: block;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 100%;
+    height: 45%;
+    position: fixed;
+    z-index: 4000;
+    bottom: 0px;
+    right: 0px;
+    font-size: 4vh;
+    background: #fff;
+    border: 1px solid #cccccc;
+    text-align: center;
+    &.pad{
+      width:calc(100% - 24vh);
+      margin-right:24vh;
+    }
+    &.book_pad{
+      width:calc(100% - 24vh);
+      margin-right:12vh;
+      margin-left:12vh;
+      bottom: 8vh;
+    }
+    &.phone{
+      bottom: 8vh;
+      height: 37%;
+    }
+    div {
+      &.aimtooldiv {
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        height: 20%;
+        background: #d3d3d3;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        vertical-align: top;
+        text-align:left;
+        div {
+          &.aimclosediv {
+            display: inline-block;
+            width: 10%;
+            height: 100%;
+            line-height:4vmin;
+            color: #000000;
+            cursor: pointer;
+            font-size: 4vmin;
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align:center;
+          }
+          &.aimresultdiv {
+            display: inline-block;
+            width: 90%;
+            height: 100%;
+            color: #000000;
+            cursor: pointer;
+            font-size: 4vmin;
+            text-align: left;
+            div {
+              &.pinyin {
+                width: 100%;
+                height: 40%;
+                line-height: 3.6vh;
+                font-size: 3vh;
+              }
+              &.result {
+                width: 100%;
+                height: 60%;
+                line-height: 4vh;
+                font-size: 4vh;
+                ol {
+                  margin: 0;
+                  padding: 0;
+                  display: inline-block;
+                  vertical-align: middle;
+                  width: 100%;
+                  &:after {
+                    content: '';
+                    display: block;
+                    clear: left;
+                  }
+                  li {
+                    margin-left: 0;
+                    text-align: center;
+                    display: inline-block;
+                    width: 10%;
+                    cursor: pointer;
+                    list-style-type: none;
+                    list-style-position: inside;
+                    &:first-child {
+                      color: red;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &.aimbigbndiv {
+        position: fixed;
+        background: #fff;
+        border: solid 1px #b5c5d2;
+        color: #0364cd;
+        display: none;
+        z-index: 2;
+        text-align: center;
+        width: 44;
+        height: 44px;
+        line-height: 44px;
+        span {
+          font-size: 44px;
+          display: inline-block;
+          line-height: 44px;
+          left: 50%;
+          top: 50%;
+          position: absolute;
+          transform: translateY(-50%) translateX(-50%);
+          -webkit-transform: translateY(-50%) translateX(-50%);
+          width: 100%;
+        }
+      }
+      &.aimbndiv {
+        display: inline-block;
+        width: 100%;
+        height: 80%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        div {
+          &.aimbnrowdiv {
+            flex: 1;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+            width: 100%;
+            div {
+              &.signnumdiv {
+                flex: 1;
+                padding: 0px;
+                text-align: center;
+                background-color: #eef7ff;
+                border: 1px solid #6f91ae;
+                border-radius: 3px;
+                vertical-align: middle;
+                cursor: pointer;
+                position: relative;
+                margin: 0.1vh;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                display: flex;
+                justify-content: center;
+                /*x轴对齐方式*/
+                align-items: center;
+                /*y轴对滴方式*/
+                &.grey {
+                  background: #d3d3d3;
+                }
+                &.ml5vw {
+                  margin-left: 5vw;
+                }
+                &.mr5vw {
+                  margin-right: 5vw;
+                }
+                &.flex2 {
+                  flex: 2;
+                }
+                &.flex3 {
+                  flex: 3;
+                }
+                &.cnen {
+                  font-size: 2vh;
+                }
+                &.enter {
+                  background: url("./images/enter_pc.png") no-repeat scroll center center #d3d3d3;
+                  font-size: 0;
+                }
+                &.delete {
+                  background: url("./images/calcdel_pc.png") no-repeat scroll center center #d3d3d3;
+                  font-size: 0;
+                }
+                &.fraction {
+                  background: url("./images/fraction_pc.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.space {
+                  background: url("./images/space_pc.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.sqrt2 {
+                  background: url("./images/sqrt2.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.sqrt3 {
+                  background: url("./images/sqrt3.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.aimsup {
+                  background: url("./images/aimsup.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.aimsub {
+                  background: url("./images/aimsub.png") no-repeat scroll center center #eef7ff;
+                  font-size: 0;
+                }
+                &.hidden {
+                  visibility: hidden;
+                }
+                &.double {
+                  font-size: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
