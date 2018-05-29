@@ -1,5 +1,6 @@
 <template>
-  <div class="k-btn-wrap">
+  <div class="k-btn-wrap"
+       :class="boardData.class">
     <transition-group
       name='fade'>
       <div class="clear-fix k-btn-box" v-show="model === 'text'" key="text">
@@ -41,13 +42,14 @@
             class="clear-fix k-row"
             :class="{['k-row-' + symbolsText.ordinary.length]: 1}">
         <span
-          class="fl k-btn"
+          class="fl k-btn k-symbol"
           v-for="(btn, i) in row"
           @click.stop="$emit('btn-click', $event, btn)"
-          :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
+          :class="{['k-btn-' + row.length]: 1}"
           :key="i">{{(isUpper && btn.type === 'default') && btn.text.toUpperCase() || btn.text}}</span>
           </li>
         </ul>
+
         <ul class="fr sym-ul sym-pad" :style="cp_right">
           <li
             class="k-row"
@@ -93,7 +95,7 @@
       return {}
     },
     props: {
-      keysText: {
+      boardData: {
         type: Object,
         required: true,
       },

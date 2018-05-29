@@ -1,13 +1,10 @@
 {
   "number": {
     "name": "数字键盘",
+    "model": "TheNumber",
     "data": {
       "ordinary": [
         [
-          {
-            "text": "+",
-            "type": "symbol"
-          },
           {
             "text": 1,
             "type": "default"
@@ -19,18 +16,9 @@
           {
             "text": 3,
             "type": "default"
-          },
-          {
-            "text": "分数",
-            "type": "symbol",
-            "expect": "fraction"
           }
         ],
         [
-          {
-            "text": "-",
-            "type": "symbol"
-          },
           {
             "text": 4,
             "type": "default"
@@ -42,17 +30,9 @@
           {
             "text": 6,
             "type": "default"
-          },
-          {
-            "text": "%",
-            "type": "symbol"
           }
         ],
         [
-          {
-            "text": "x",
-            "type": "symbol"
-          },
           {
             "text": 7,
             "type": "default"
@@ -64,32 +44,12 @@
           {
             "text": 9,
             "type": "default"
-          },
-          {
-            "text": ":",
-            "type": "symbol"
           }
         ],
         [
           {
-            "text": "/",
-            "type": "symbol"
-          },
-          {
-            "text": "=",
-            "type": "symbol"
-          },
-          {
-            "text": ".",
-            "type": "symbol"
-          },
-          {
             "text": 0,
             "type": "default"
-          },
-          {
-            "text": "......",
-            "type": "symbol"
           }
         ]
       ],
@@ -108,11 +68,45 @@
             "expect": "next"
           }
         ]
-      ]
+      ],
+      "defaultSymbol": {
+        "+": {
+          "type": "symbol"
+        },
+        "分数": {
+          "type": "symbol",
+          "expect": "fraction"
+        },
+        "-": {
+          "type": "symbol"
+        },
+        "%": {
+          "type": "symbol"
+        },
+        "×": {
+          "type": "symbol"
+        },
+        "：": {
+          "type": "symbol"
+        },
+        "÷": {
+          "type": "symbol"
+        },
+        "=": {
+          "type": "symbol"
+        },
+        ".": {
+          "type": "symbol"
+        },
+        "……": {
+          "type": "symbol"
+        }
+      }
     }
   },
   "vertical": {
     "name": "竖式键盘",
+    "model": "TheConstant",
     "data": {
       "ordinary": [
         [
@@ -192,6 +186,7 @@
   },
   "takeOff": {
     "name": "脱式键盘",
+    "model": "TheConstant",
     "data": {
       "ordinary": [
         [
@@ -311,6 +306,7 @@
   },
   "letters": {
     "name": "英文字母键盘",
+    "model": "TheLetter",
     "data": {
       "ordinary": [
         [
@@ -464,5 +460,4 @@
     },
     "class": "k-letters"
   }
-
 }

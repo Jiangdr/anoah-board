@@ -63,9 +63,12 @@ $lineheight_f: 2.6vh;
   .cursor {
     height: 18px;
     width: 1px;
+    overflow: hidden;
+    color: transparent;
     display: inline-block;
     background: url("./images/cursor.gif") no-repeat scroll 0 0 transparent;
     margin-left: -1px;
+
   }
   .equal {
     color: #000000;

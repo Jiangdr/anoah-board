@@ -1,0 +1,105 @@
+{
+  "G_2_01": {
+    ".": {
+      "type": "symbol"
+    },
+    "<": {
+      "type": "symbol"
+    },
+    ">": {
+      "type": "symbol"
+    },
+    "≠": {
+      "type": "symbol"
+    },
+    "≤": {
+      "type": "symbol"
+    },
+    "≥": {
+      "type": "symbol"
+    },
+    "+": {
+      "type": "symbol"
+    },
+    "-": {
+      "type": "symbol"
+    },
+    "=": {
+      "type": "symbol"
+    },
+    "≈": {
+      "type": "symbol"
+    },
+    "≡": {
+      "type": "symbol"
+    },
+    "×": {
+      "type": "symbol"
+    },
+    "÷": {
+      "type": "symbol"
+    },
+    "•": {
+      "type": "symbol"
+    },
+    "|": {
+      "type": "symbol"
+    },
+    "!": {
+      "type": "symbol"
+    },
+    "log": {
+      "type": "symbol"
+    },
+    "lg": {
+      "type": "symbol"
+    },
+    "ln": {
+      "type": "symbol"
+    },
+    ":": {
+      "type": "symbol"
+    },
+    "±": {
+      "type": "symbol"
+    },
+    "∓": {
+      "type": "symbol"
+    },
+    "∏": {
+      "type": "symbol"
+    },
+    "……": {
+      "type": "symbol"
+    }
+  },
+  "G_2_02": {
+    "mm": {
+      "type": "symbol"
+    },
+    "cm": {
+      "type": "symbol"
+    },
+    "dm": {
+      "type": "symbol"
+    },
+    "m": {
+      "type": "symbol"
+    },
+    "km": {
+      "type": "symbol"
+    },
+    "μm": {
+      "type": "symbol"
+    },
+    "nm": {
+      "type": "symbol"
+    },
+    "n": {
+      "type": "symbol"
+    },
+    "mile": {
+      "type": "symbol"
+    }
+  }
+}

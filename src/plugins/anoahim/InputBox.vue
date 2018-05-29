@@ -54,54 +54,63 @@
 
   </div>
 
-  <div
-    v-else
-    :key="num"
-    class="iminputdiv qti_fill_input"
-    v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"
-    v-on:click.stop="addcursor($event,num,-1,-1,-1)">
+  <!--<div-->
+    <!--v-else-->
+    <!--:key="num"-->
+    <!--class="iminputdiv qti_fill_input"-->
+    <!--v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"-->
+    <!--v-on:click.stop="addcursor($event,num,-1,-1,-1)">-->
 
-    <template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>
+    <!--<template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>-->
 
-    <template v-else v-for="(value1,key1) in inputarray[num]">
+    <!--&lt;!&ndash;<template v-else v-for="(value1,key1) in inputarray[num]">&ndash;&gt;-->
 
-      <template
-        v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?
-      </template>
-      <div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor"></div>
-      <div
-        v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
-        :key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
-        v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"
-        v-on:click.stop="addcursor($event,num,key1,-1,-1)">
-        <div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">
-          <div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"
-               v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}
-          </div>
-        </div>
-        <div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">
-          <div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"
-               v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}
-          </div>
-        </div>
-      </div>
-      <div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">
-        {{value1.value}}
-      </div>
+      <!--&lt;!&ndash;<template&ndash;&gt;-->
+        <!--&lt;!&ndash;v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?&ndash;&gt;-->
+      <!--&lt;!&ndash;</template>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor">1</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div&ndash;&gt;-->
+        <!--&lt;!&ndash;v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"&ndash;&gt;-->
+        <!--&lt;!&ndash;:key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"&ndash;&gt;-->
+        <!--&lt;!&ndash;v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"&ndash;&gt;-->
+        <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"&ndash;&gt;-->
+               <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"&ndash;&gt;-->
+               <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
+        <!--&lt;!&ndash;{{value1.value}}&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-    </template>
+    <!--&lt;!&ndash;</template>&ndash;&gt;-->
 
-  </div>
+  <!--</div>-->
 
 </template>
 
 <script>
   import Bus from './view/emitBus'
+  import mathSymbol from './json/queryGid'
 
 
   export default {
     name: 'InputBox',
     // props: ["testdata", "rootdata", "inputarray", "is_correct", "num"],
+    data() {
+      return {
+        maxlength: "",
+        inputarray: [[]],
+        symbolType: [], // 符号组id
+        matchBoardType: "number", // 匹配的默认键盘
+      };
+    },
     props: {
       testdata: {
         type: Object,
@@ -127,7 +136,7 @@
         type: [Number, String],
         default: -1,
       },
-
+      /**/
       rects: { // 要替换的输入框client rects
         type: DOMRect,
         default() {
@@ -154,19 +163,21 @@
       },
       boardType: { // 键盘类型
         type: [Number, String],
-        default: 0,
-      },
+        default: 'none',
+      }, // 指定键盘类型
       value: {
         type: [String, Number],
         default: '',
       },
-
-    },
-    data() {
-      return {
-        maxlength: "",
-        inputarray: [[]],
-      };
+      /*正确答案*/
+      rightAnswers: {
+        type: [String, Number],
+        default: '',
+      },
+      subject: {
+        type: [String, Number],
+        default: 2, // 默认学科：数学
+      }, // 学科编号
     },
     created: function () {
       Bus.iptComps.push({
@@ -215,7 +226,58 @@
             this.$addcursor(this, 0, event, i, j, k, dir);
           }
         } else { // 通用环境调动键盘
-          this.$addcursor(this, this.boardType, event, i, j, k, dir);
+          let {rightAnswers, subject, boardType, id} = this,
+            gId = {};
+
+          switch (subject.toString()) {
+            /*学科为数学*/
+            case '2': {
+              /*若答案中含有数字，使用数字键盘*/
+              boardType = 'number';
+              if (rightAnswers.match(/\d/im)) {
+                boardType = 'number';
+              }
+              /*
+              *数字+符号键盘时
+              *答案中含有非数字，优先判定为符号
+              */
+              if (boardType === 'number' && Number(rightAnswers) != rightAnswers) {
+                let y = rightAnswers.match(/\w+/igm); // 截取英文组成的符号
+                y.forEach((val) => {
+                  let m = mathSymbol[val];
+                  /* // 获取英文组成的符号的组id*/
+                  if (m) {
+                    if (!gId[m.gid]) {
+                      gId[m.gid] = {
+                        [val]: {type: "symbol"},
+                      };
+                    } else {
+                      gId[m.gid][val] = {type: "symbol"};
+                    }
+                  }
+                });
+                for (let i of rightAnswers) {
+                  let m = mathSymbol[i];
+                  /*获取普通符号的组id*/
+                  if (m) {
+                    if (!gId[m.gid]) {
+                      gId[m.gid] = {
+                        [i]: {type: "symbol"},
+                      };
+                    } else {
+                      gId[m.gid][i] = {type: "symbol"};
+                    }
+                  }
+                }
+              }
+
+            }
+              break;
+          }
+
+          this.$addcursor(this, boardType, event, i, j, k, dir, {
+            gId
+          });
         }
       },
       //光标是否在公式里

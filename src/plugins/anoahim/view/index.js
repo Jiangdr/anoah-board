@@ -1,5 +1,9 @@
-import BoardModul from './BoardModul';
+import TheConstant from './TheConstant';
+import TheNumber from './TheNumber';
+import TheLetter from './TheLetter';
 
 export {
-  BoardModul,
+  TheConstant,
+  TheNumber,
+  TheLetter,
 }

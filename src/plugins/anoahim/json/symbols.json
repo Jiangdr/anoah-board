@@ -46,10 +46,191 @@
             "text": "",
             "type": "hidden"
           }
-        ],
-        [],
-        []
+        ]
       ],
+      "large": [
+        [
+          {
+            "text": "删除",
+            "type": "symbol",
+            "expect": "delete"
+          }
+        ],
+        [
+          {
+            "text": "下一空",
+            "type": "symbol",
+            "expect": "next"
+          }
+        ],
+        [
+          {
+            "text": "返回",
+            "type": "symbol",
+            "expect": "goback"
+          }
+        ]
+      ]
+    }
+  },
+  "math": {
+    "name": "数学符号组",
+    "data": {
+      "ordinary": {
+        "gsb6p1i": {
+          "text": "\""
+        },
+        "wcpwilu": {
+          "text": "，"
+        },
+        "4agcrmd": {
+          "text": "。"
+        },
+        "dq6tbdx": {
+          "text": "？"
+        },
+        "c92apcx": {
+          "text": "！"
+        },
+        "fkpuhbr": {
+          "text": "："
+        },
+        "8v2a34x": {
+          "text": "；"
+        },
+        "2tdgs1y": {
+          "text": "、"
+        },
+        "xqwttdw": {
+          "text": ","
+        },
+        "0uqumh5": {
+          "text": "."
+        },
+        "onb0em7": {
+          "text": "?"
+        },
+        "wxys727": {
+          "text": "!"
+        },
+        "xjke4ta": {
+          "text": ":"
+        },
+        "eh8w9us": {
+          "text": ";"
+        },
+        "1olsmur": {
+          "text": " "
+        },
+        "0ta1z31": {
+          "text": "“"
+        },
+        "nb7568x": {
+          "text": "”"
+        },
+        "2k7z0co": {
+          "text": "‘"
+        },
+        "q2oa4qd": {
+          "text": "’"
+        },
+        "bcjozzo": {
+          "text": "〝"
+        },
+        "j4j6ptb": {
+          "text": "〞"
+        },
+        "hhcz3xc": {
+          "text": "…"
+        },
+        "53v61z7": {
+          "text": "…"
+        },
+        "47nnys2": {
+          "text": "＋"
+        },
+        "c0fmoxs": {
+          "text": " "
+        },
+        "e2r0mew": {
+          "text": "－"
+        },
+        "lq7txys": {
+          "text": "×"
+        },
+        "o0z3f3l": {
+          "text": " "
+        },
+        "qqojfwz": {
+          "text": "÷"
+        },
+        "8w6vmiu": {
+          "text": "＝"
+        },
+        "g1q6jqh": {
+          "text": " "
+        },
+        "clhk1sj": {
+          "text": "℃"
+        },
+        "w4qiszb": {
+          "text": " "
+        },
+        "vut0vga": {
+          "text": "°"
+        },
+        "rrlnupf": {
+          "text": "("
+        },
+        "74ww8tq": {
+          "text": "度"
+        },
+        "htzb0zy": {
+          "text": ")"
+        },
+        "ms5i0ym": {
+          "text": "【"
+        },
+        "8v0wegh": {
+          "text": "】"
+        },
+        "0rtf9l2": {
+          "text": "《"
+        },
+        "4dprqse": {
+          "text": "》"
+        },
+        "scphd5t": {
+          "text": "＜"
+        },
+        "e5exdgd": {
+          "text": "＞"
+        },
+        "ka8khfx": {
+          "text": "（"
+        },
+        "vlwli24": {
+          "text": "）"
+        },
+        "9osukw7": {
+          "text": "｛"
+        },
+        "tovns0o": {
+          "text": "｝"
+        },
+        "x3tz3rf": {
+          "text": "［"
+        },
+        "aolaudh": {
+          "text": "］"
+        },
+        "6oeaiu2": {
+          "text": "@"
+        },
+        "j7g4kpz": {
+          "text": "\""
+        }
+      },
       "large": [
         [
           {

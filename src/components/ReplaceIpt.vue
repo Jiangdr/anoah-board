@@ -23,8 +23,9 @@
           @before-next="beforeNext"
           :custom="true"
           v-model="ipt.value"
-          :next-id="idx + 1"
-          :id="idx"
+          :right-answers="ipt.right"
+          :next-id="i + '_' + (idx + 1)"
+          :id="i + '_' + idx"
           :boardType="li.type"></input-box>
       </li>
     </ul>
@@ -64,56 +65,60 @@
     data() {
       return {
         lis: [
+          // {
+          //   type: 'vertical',
+          //   value: [
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //       rightAnswers: 'a + 1 ≈ 4 cm',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //   ],
+          //   name: '竖式计算',
+          // },
+          // {
+          //   type: 'takeOff',
+          //   value: [
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //     {
+          //       value: '',
+          //     },
+          //   ],
+          //   name: '脱式计算',
+          // },
           {
-            type: 'vertical',
+            // type: 'number',
             value: [
               {
                 value: '',
+                right: 'a > 5 + 9 cm',
               },
               {
                 value: '',
+                right: '≈ cm',
               },
               {
                 value: '',
-              },
-              {
-                value: '',
-              },
-              {
-                value: '',
-              },
-              {
-                value: '',
-              },
-            ],
-            name: '竖式计算',
-          },
-          {
-            type: 'takeOff',
-            value: [
-              {
-                value: '',
-              },
-              {
-                value: '',
-              },
-              {
-                value: '',
-              },
-            ],
-            name: '脱式计算',
-          },
-          {
-            type: 'number',
-            value: [
-              {
-                value: '',
-              },
-              {
-                value: '',
-              },
-              {
-                value: '',
+                right: '66!',
               },
             ],
             name: '数字键盘',
@@ -148,13 +153,13 @@
         this.toggle = false;
       },
       afterChange(toNext, {value}) {
-        if (this.select === 0 && value.length > 1) {
-          this.lis[0].value.some((item, idx) => {
-            let res = item.value === '';
-            res && toNext(idx);
-            return res
-          }) || toNext();
-        }
+        // if (this.select === 0 && value.length > 1) {
+        //   this.lis[0].value.some((item, idx) => {
+        //     let res = item.value === '';
+        //     res && toNext(idx);
+        //     return res
+        //   }) || toNext();
+        // }
       },
       beforeNext(toNext, {currentId}) {
         if (this.select === 0 && currentId === this.lis[0].value.length - 1) {

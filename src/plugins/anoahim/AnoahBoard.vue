@@ -28,12 +28,8 @@
 
       <component
         :is="cp_board.compName"
-        :keys-text="cp_board.keysText"
-        :symbols-text="cp_board.symbols"
-        :is-upper="isUpper"
-        :model="boardModel"
-        @btn-click="btnClick"
-        :class="cp_board.class"></component>
+        :board-data="cp_board"
+        @btn-click="btnClick"></component>
 
       <!--<div-->
       <!--v-for='(value,key) in (numflag == 1 && type == 0) ? keypadjson[type].numsrc : keypadjson[type].src'-->
@@ -54,8 +50,8 @@
 
 <script>
   import * as comp from './view'
-  import keysTextJson from './json/keystext'
-  import symbolJson from './json/symbols'
+  import keysTextJson from './json/keystext.json'
+  import querySymbol from './json/querySymbol.json'
   import pyinput from "./pyinput.json"
   import Bus from './view/emitBus'
 
@@ -79,16 +75,19 @@
         hanziarray: [], // 候选汉字的汉字
         pyinputjson: {}, //拼音字库
 
+
         isUpper: false, // 英文字符是否大写
         boardType: 'number', // 键盘类型
-        symbolType: 'symbol_1', // 符号类型
+        symbolType: 'math', // 符号类型
         nextId: '', // 下一个跳转ID
+        gId: {}, // 匹配的符号组id
         candidate: '', // 候选的汉字
         pinyinstr: '', // 候选拼音
         boardModel: 'text', // 候选拼音
       };
     },
     created: function () {
+      console.time('start')
       let self = this;
       // this.pyinputjson = require("./pyinput.json");
       // this.keypadjson = require("./keypad.json");
@@ -246,8 +245,9 @@
         return {i: -1, j: -1, k: -1, dir: -1};
       },
       //添加光标
-      addcursor: function (event, i, j, k, dir, {nextId}) {
+      addcursor: function (event, i, j, k, dir, {nextId, gId}) {
         this.nextId = nextId;
+        this.gId = gId;
         let pos = this.findcursor();
         //删除光标
         if (pos.i >= 0 && pos.j >= 0) {
@@ -696,26 +696,28 @@
     },
     computed: {
       cp_board() {
-        let {boardType, symbolType} = this,
-          symbols = symbolJson[symbolType].data,
-          keysText = keysTextJson[boardType].data;
-        if (boardType === 'chinese') {
-          boardType = 'letters';
-        }
-        if (symbols) {
-          let rep = keysText.ordinary[keysText.ordinary.length - 1][0],
-            temp = Object.assign({}, rep);
-          Object.assign(rep, {
-            text: '更多',
-            expect: "showSymbol"
-          })
+        let {boardType, gId} = this,
+          keysText = keysTextJson[boardType].data,
+          matchSymbol = {
+            required: {},
+            group: {},
+          };
+        /*数字键盘时，重置符号*/
+        if (boardType === 'number') {
+          Object.entries(gId).forEach(([k, val]) => {
+            let g = querySymbol[k] || {};
+            /*必备的符号*/
+            Object.assign(matchSymbol.required, val);
+            /*匹配的符号组*/
+            Object.assign(matchSymbol.group, g);
+          });
         }
 
 
         return {
-          compName: 'BoardModul',
-          symbols,
+          compName: keysTextJson[boardType].model,
           keysText,
+          matchSymbol,
         }
       },
       cp_candidate() {
@@ -758,7 +760,6 @@
 
 <style lang='scss' scoped>
   /*@import "./anoahim.scss";*/
-
 
   .anoahimdiv {
     box-sizing: border-box;
@@ -905,15 +906,13 @@
       &:active {
         background: #13d098;
       }
-      &.k-btn-3 {
-        width: calc((100% - #{$interval} * 2) / 3);
+
+      @for $i from 3 through 10 {
+        &.k-btn-#{$i} {
+          width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
+        }
       }
-      &.k-btn-4 {
-        width: calc((100% - #{$interval} * 3) / 4);
-      }
-      &.k-btn-5 {
-        width: calc((100% - #{$interval} * 4) / 5);
-      }
+
     }
 
     .k-symbol, .k-space {
@@ -987,14 +986,10 @@
         & + .k-btn {
           margin-left: $interval;
         }
-        &.k-btn-3 {
-          width: calc((100% - #{$interval} * 2) / 3);
-        }
-        &.k-btn-4 {
-          width: calc((100% - #{$interval} * 3) / 4);
-        }
-        &.k-btn-5 {
-          width: calc((100% - #{$interval} * 4) / 5);
+        @for $i from 3 through 10 {
+          &.k-btn-#{$i} {
+            width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
+          }
         }
       }
 
@@ -1024,7 +1019,6 @@
       }
     }
   }
-
 
   .fade-enter-active,
   .fade-leave-active {
