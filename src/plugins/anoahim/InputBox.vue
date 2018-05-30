@@ -368,10 +368,11 @@
             /*若答案中含有数字，使用数字键盘*/
             if (rightAnswers.match(/\d/im)) {
               this.matchBoardType = 'number';
-            }
-            /*答案中没有数字且含有字母，使用英文键盘*/
-            else if (rightAnswers.match(/[a-z]/im)) {
+            } else if (rightAnswers.match(/[a-z]/im)) {
+              /*答案中没有数字且含有字母，使用英文键盘*/
               this.matchBoardType = 'letters';
+            } else {
+              this.matchBoardType = 'symbol';
             }
             /*未指定键盘类型时，使用匹配出的键盘类型*/
             calcType = boardType === 'none' ? this.matchBoardType : boardType;
