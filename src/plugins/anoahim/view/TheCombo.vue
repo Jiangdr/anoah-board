@@ -6,12 +6,12 @@
         :key="idx"
         class="clear-fix k-row"
         :class="{['k-row-' + cp_ordinary.length]: 1}">
-            <span
-              class="fl k-btn"
-              v-for="(btn, i) in row"
-              @click.stop="btnClick($event, btn)"
-              :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
-              :key="i">{{(isUpper && btn.type === 'default') && btn.text.toUpperCase() || btn.text}}</span>
+          <span
+            class="fl k-btn"
+            v-for="(btn, i) in row"
+            @click.stop="btnClick($event, btn)"
+            :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
+            :key="i">{{(isUpper && btn.type === 'default') && btn.text.toUpperCase() || btn.text}}</span>
       </li>
     </ul>
   </div>

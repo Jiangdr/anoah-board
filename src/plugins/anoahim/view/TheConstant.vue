@@ -1,38 +1,33 @@
 <template>
-  <div class="k-btn-wrap">
-    <transition-group
-      name='fade'>
-      <div class="clear-fix k-btn-box" key="text">
-        <ul class="fl num-ul" :style="cp_left">
-          <li
-            v-for="(row, idx) in cp_ordinary"
-            :key="idx"
-            class="clear-fix k-row"
-            :class="{['k-row-' + cp_ordinary.length]: 1}">
+  <div class="clear-fix k-btn-wrap" key="text">
+    <ul class="fl num-ul" :style="cp_left">
+      <li
+        v-for="(row, idx) in cp_ordinary"
+        :key="idx"
+        class="clear-fix k-row"
+        :class="{['k-row-' + cp_ordinary.length]: 1}">
         <span
           class="fl k-btn"
           v-for="(btn, i) in row"
           @click.stop="$emit('btn-click', $event, btn)"
           :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
           :key="i">{{btn.text}}</span>
-          </li>
-        </ul>
-        <ul class="fr sym-ul sym-pad" :style="cp_right">
-          <li
-            class="k-row"
-            :class="{['k-row-' + cp_large.length]: 1}"
-            v-for="(row, idx) in cp_large"
-            :key="idx">
+      </li>
+    </ul>
+    <ul class="fr sym-ul sym-pad" :style="cp_right">
+      <li
+        class="k-row"
+        :class="{['k-row-' + cp_large.length]: 1}"
+        v-for="(row, idx) in cp_large"
+        :key="idx">
         <span
           class="k-btn"
           :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
           v-for="(btn, i) in row"
           @click.stop="$emit('btn-click', $event, btn)"
           :key="i">{{btn.text}}</span>
-          </li>
-        </ul>
-      </div>
-    </transition-group>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -84,10 +79,19 @@
         }
       },
       cp_ordinary() {
-        return this.boardData.keysText.ordinary
+        let {keysText: {ordinary}} = this.boardData;
+        return ordinary
       },
       cp_large() {
-        return this.boardData.keysText.large
+        let {keysText: {large}, prevBoardType} = this.boardData;
+        if (prevBoardType) {
+          large = [...large, [{
+            text: '返回',
+            expect: 'goback',
+            type: 'symbol',
+          }]];
+        }
+        return large
       },
     },
   }

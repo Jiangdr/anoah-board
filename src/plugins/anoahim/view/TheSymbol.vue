@@ -5,12 +5,12 @@
         v-for="(row, idx) in Math.ceil(cp_ordinary.length / 6)"
         :key="idx"
         class="clear-fix k-row k-row-4">
-            <span
-              class="fl k-btn k-symbol k-btn-6"
-              v-for="(btn, i) in 6"
-              v-if="(idx * 6 + i) < cp_ordinary.length"
-              @click.stop="$emit('btn-click', $event, cp_ordinary[idx * 6 + i])"
-              :key="i">{{cp_ordinary[idx * 6 + i].text}}</span>
+          <span
+            class="fl k-btn k-symbol k-btn-6"
+            v-for="(btn, i) in 6"
+            v-if="(idx * 6 + i) < cp_ordinary.length"
+            @click.stop="$emit('btn-click', $event, cp_ordinary[idx * 6 + i])"
+            :key="i">{{cp_ordinary[idx * 6 + i].text}}</span>
       </li>
     </ul>
     <ul class="fr sym-ul sym-pad">

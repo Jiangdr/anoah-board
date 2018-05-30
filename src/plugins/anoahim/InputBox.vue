@@ -382,6 +382,8 @@
           }
             break;
         }
+        console.log(gId);
+
         Object.entries(gId).forEach(([k, val]) => {
           let g = querySymbol[k] || {};
           /*必备的符号*/

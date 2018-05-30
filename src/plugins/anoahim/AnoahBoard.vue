@@ -120,15 +120,20 @@
           }
           return;
         }
+        /*通用键盘*/
         if (boardType === 'combo') {
           if (expect === 'languageSwitch') {
             this.pinyinstr = '';
             this.boardModel = this.boardModel === 'text' ? 'chinese' : 'text';
             return
+          } else if (expect === 'chooseNumber') {
+            this.prevBoardType = this.boardType;
+            this.boardType = 'vertical';
+            return
           }
         }
 
-        /*中文模式*/
+        /*中文键盘*/
         if (boardType === 'chinese' || (boardType === 'combo' && boardModel === 'chinese')) {
           if (expect === 'delete') {
             if (this.pinyinstr !== '') {
@@ -387,7 +392,7 @@
         return false;
       },
       //插入字符和判断
-      insertstr: function (array, index, str) {
+      insertstr: function (array, index, str, name = 'aime') {
         let length = array.length;
         //脱式计算需要判断输入
         if (this.type == 2) {
@@ -436,7 +441,7 @@
             return;
           }
         }
-        array.splice(index, 0, {name: "aime", value: str});
+        array.splice(index, 0, {name, value: str});
       },
       //查找公式数组里的光标的位置并插入字符
       findfraccurinsert: function (name, str, frac_ele, other_ele) {
@@ -593,8 +598,8 @@
                   }
                 }
               } else if (str == "space") {
-                this.insertstr(this.inputarray[i], j, " ");
-                this.inputarray[i].splice(j, 0, {name: 'space', value: ""});
+                this.insertstr(this.inputarray[i], j, " ", 'space');
+                // this.inputarray[i].splice(j, 0, {name: 'space', value: ""});
               } else if (str == "next") {
                 if (this.type == 1) {
                   let fisrti = -1;
