@@ -71,7 +71,7 @@ $lineheight_f: 2.6vh;
     }
   }
   .cursor {
-    height: 3vh;
+    height: 4vh;
     width: 1px;
     //overflow: hidden;
     color: transparent;
@@ -108,6 +108,10 @@ $lineheight_f: 2.6vh;
         display: inline-block;
         font-size: $fontsize;
         min-height: auto;
+      }
+      .cursor {
+        height: 3vh;
+
       }
 
     }
