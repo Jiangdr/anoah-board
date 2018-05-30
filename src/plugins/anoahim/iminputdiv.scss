@@ -7,7 +7,7 @@ $fontsize_bb: 3.6vh;
 $fontsize_bbb: 4vh;
 //行高
 $lineheight_ss: 3.4vh;
-$lineheight_s: 24px;
+$lineheight_s: 4vh;
 $lineheight: 4vh;
 $lineheight_b: 4.3vh;
 $lineheight_bb: 4.6vh;
@@ -43,7 +43,7 @@ $lineheight_f: 2.6vh;
     color: $greencolor;
   }
   .aime {
-    //display: inline-block;
+    display: inline-block;
     min-height: $lineheight_s;
   }
   .space {
@@ -56,6 +56,11 @@ $lineheight_f: 2.6vh;
     min-height: $lineheight_s;
     margin-bottom: 1px;
     padding-left: 3px;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+    white-space: initial;
+    word-wrap: break-word;
     //display: flex;
     //align-items: center;
     &.red {
@@ -66,9 +71,9 @@ $lineheight_f: 2.6vh;
     }
   }
   .cursor {
-    height: 18px;
+    height: 3vh;
     width: 1px;
-    overflow: hidden;
+    //overflow: hidden;
     color: transparent;
     display: inline-block;
     background: url("images/cursor.gif") no-repeat scroll 0 0 transparent;
@@ -79,17 +84,18 @@ $lineheight_f: 2.6vh;
     color: #000000;
   }
   .fraction {
-    font-size: 0;
+    font-size: 90%;
     text-align: center;
     background: #dddddd;
     padding: 1px 3px;
-
+    vertical-align: -.8em;
+    display: inline-block;
     &.click {
       background: transparent;
     }
     .enterdiv {
       display: block;
-      height: 20px;
+      height: 4vh;
       padding: 2px;
       white-space: nowrap;
       min-width: 18px;
@@ -101,7 +107,6 @@ $lineheight_f: 2.6vh;
       .aime {
         display: inline-block;
         font-size: $fontsize;
-        height: 18px;
         min-height: auto;
       }
 

@@ -9,13 +9,12 @@
     <div
       v-for="(value,key) in inputarray"
       :key="key"
-      class="row clear-fix"
+      class="row"
       v-on:click.stop="addcursor($event,key,-1,-1,-1)"
       v-bind:class="{'red':is_correct?is_correct[key]=='0':0,'green':is_correct?is_correct[key]=='1':0}">
       <template v-for="(value1,key1) in value">
-        <span v-if="value1.name=='cursor'" :key="key1" class="k-board cursor fl"></span>
+        <span v-if="value1.name=='cursor'" :key="key1" class="k-board cursor">|</span>
         <span
-          class="fl"
           v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"
           :key="key1"
           v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"
@@ -43,7 +42,6 @@
         </span>
         <span
           v-else
-          class="fl"
           :key="key1"
           v-bind:class="[value1.name,{'equal':value1.value=='='}]"
           v-on:click.stop="addcursor($event,key,key1,-1,-1)">{{value1.value}}
@@ -361,7 +359,7 @@
         required = {}, // 必须具备的符号
         group = {},
         calcType = null;
-      /*为传递键盘类型时，通过正确答案判断类型*/
+      /*未传递键盘类型时，通过正确答案判断类型*/
       if (rightAnswers) {
         /*获取gid*/
         switch (subject.toString()) {
