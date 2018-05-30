@@ -35,7 +35,7 @@ AnoahIM.install = function (Vue) {
     instance.closeclick();
   }
   //增加光标
-  Vue.prototype.$addcursor = (vthis, type, event, i, j, k, dir, {gId}) => {
+  Vue.prototype.$addcursor = (vthis, type, event, i, j, k, dir, {symbols}) => {
     instance.vthis = vthis;
     instance.vthis.rootdata.imshow = 1;
     instance.type = type;
@@ -55,7 +55,7 @@ AnoahIM.install = function (Vue) {
       instance.enterflag = 0;
       instance.maxlength = "";
     }
-    instance.addcursor(event, i, j, k, dir, {nextId: vthis.nextId, gId});
+    instance.addcursor(event, i, j, k, dir, {nextId: vthis.nextId, symbols});
   };
 
   Object.defineProperties(Vue.prototype, {
