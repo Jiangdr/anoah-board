@@ -1,7 +1,6 @@
 <template>
 
   <div
-    :style="cp_position"
     v-if="num==-1"
     class="iminputdiv"
     :class="{custom: custom}"
@@ -54,61 +53,68 @@
 
   </div>
 
-  <!--<div-->
-  <!--v-else-->
-  <!--:key="num"-->
-  <!--class="iminputdiv qti_fill_input"-->
-  <!--v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"-->
-  <!--v-on:click.stop="addcursor($event,num,-1,-1,-1)">-->
+  <div
+    v-else
+    :key="num"
+    class="iminputdiv qti_fill_input"
+    v-bind:class="{'red':is_correct?is_correct[num]=='0':0,'green':is_correct?is_correct[num]=='1':0}"
+    v-on:click.stop="addcursor($event,num,-1,-1,-1)">
 
-  <!--<template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>-->
+    <template v-if="inputarray[num].length==0&&testdata.msubmitflag==1">?</template>
 
-  <!--&lt;!&ndash;<template v-else v-for="(value1,key1) in inputarray[num]">&ndash;&gt;-->
+    <!--<template v-else v-for="(value1,key1) in inputarray[num]">-->
 
-  <!--&lt;!&ndash;<template&ndash;&gt;-->
-  <!--&lt;!&ndash;v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?&ndash;&gt;-->
-  <!--&lt;!&ndash;</template>&ndash;&gt;-->
-  <!--&lt;!&ndash;<div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor">1</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;<div&ndash;&gt;-->
-  <!--&lt;!&ndash;v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"&ndash;&gt;-->
-  <!--&lt;!&ndash;:key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"&ndash;&gt;-->
-  <!--&lt;!&ndash;v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"&ndash;&gt;-->
-  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
-  <!--&lt;!&ndash;<div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">&ndash;&gt;-->
-  <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"&ndash;&gt;-->
-  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;<div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">&ndash;&gt;-->
-  <!--&lt;!&ndash;<div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"&ndash;&gt;-->
-  <!--&lt;!&ndash;v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--&lt;!&ndash;<div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">&ndash;&gt;-->
-  <!--&lt;!&ndash;{{value1.value}}&ndash;&gt;-->
-  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<template-->
+    <!--v-if="inputarray[num].length==1&&value1.name=='aime'&&value1.value==''&&testdata.msubmitflag==1">?-->
+    <!--</template>-->
+    <!--<div v-else-if="value1.name=='cursor'" :key="key1" class="k-board cursor">1</div>-->
+    <!--<div-->
+    <!--v-else-if="value1.name=='fraction'||value1.name=='sqrt2'||value1.name=='sqrt3'||value1.name=='aimsup'||value1.name=='aimsub'"-->
+    <!--:key="key1" v-bind:class="[value1.name,{'click':is_cursor(value1.value)==1}]"-->
+    <!--v-bind:style="{ width: value1.name=='fraction'?Math.max(3,value1.value.up.length*1.4,value1.value.down.length*1.4) + 'vh':'auto' }"-->
+    <!--v-on:click.stop="addcursor($event,num,key1,-1,-1)">-->
+    <!--<div class="enterdiv up" v-on:click.stop="addcursor($event,num,key1,-1,'up')">-->
+    <!--<div v-for="(value2,key2) in value1.value.up" :key="key2" dir="up" :class="value2.name"-->
+    <!--v-on:click.stop="addcursor($event,num,key1,key2,'up')">{{value2.value}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="enterdiv down" v-on:click.stop="addcursor($event,num,key1,-1,'down')">-->
+    <!--<div v-for="(value2,key2) in value1.value.down" :key="key2" dir="down" :class="value2.name"-->
+    <!--v-on:click.stop="addcursor($event,num,key1,key2,'down')">{{value2.value}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div v-else :key="key1" :class="value1.name" v-on:click.stop="addcursor($event,num,key1,-1,-1)">-->
+    <!--{{value1.value}}-->
+    <!--</div>-->
 
-  <!--&lt;!&ndash;</template>&ndash;&gt;-->
+    <!--</template>-->
 
-  <!--</div>-->
+  </div>
 
 </template>
 
 <script>
   import Bus from './view/emitBus'
   import mathSymbol from './json/queryGid'
-
+  import querySymbol from './json/querySymbol.json'
+  import keysTextJson from './json/keystext.json'
 
   export default {
     name: 'InputBox',
-    // props: ["testdata", "rootdata", "inputarray", "is_correct", "num"],
     data() {
       return {
         maxlength: "",
         inputarray: [[]],
-        symbolType: [], // 符号组id
-        matchBoardType: "number", // 匹配的默认键盘
+        matchBoardType: "none", // 匹配的默认键盘
+        symbols: (() => {
+          if (this.boardType === 'none') return [];
+          return Object.entries(keysTextJson[this.boardType].data.defaultSymbol || {}).map(([k, val]) => {
+            return Object.assign({}, val, {
+              text: k,
+            })
+          })
+        })(),
       };
     },
     props: {
@@ -180,11 +186,9 @@
       }, // 学科编号
     },
     created: function () {
-      console.log(this._uid);
       Bus.iptComps.push({
         id: this.id,
         component: this,
-        _uid: this._uid,
       });
       /**/
       Bus.$on('before-next', (id, callback) => {
@@ -228,58 +232,10 @@
             this.$addcursor(this, 0, event, i, j, k, dir);
           }
         } else { // 通用环境调动键盘
-          let {rightAnswers, subject, boardType, id} = this,
-            gId = {};
+          let {boardType, symbols, matchBoardType} = this;
 
-          switch (subject.toString()) {
-            /*学科为数学*/
-            case '2': {
-              /*若答案中含有数字，使用数字键盘*/
-              boardType = 'number';
-              if (rightAnswers.match(/\d/im)) {
-                boardType = 'number';
-              }
-              /*
-              *数字+符号键盘时
-              *答案中含有非数字，优先判定为符号
-              */
-              if (boardType === 'number' && Number(rightAnswers) != rightAnswers) {
-                let y = rightAnswers.match(/\w+/igm); // 截取英文组成的符号
-                y.forEach((val) => {
-                  let m = mathSymbol[val];
-                  /* // 获取英文组成的符号的组id*/
-                  if (m) {
-                    if (!gId[m.gid]) {
-                      gId[m.gid] = {
-                        [val]: {type: "symbol"},
-                      };
-                    } else {
-                      gId[m.gid][val] = {type: "symbol"};
-                    }
-                  }
-                });
-                for (let i of rightAnswers) {
-                  let m = mathSymbol[i];
-                  /*获取普通符号的组id*/
-                  if (m) {
-                    if (!gId[m.gid]) {
-                      gId[m.gid] = {
-                        [i]: {type: "symbol"},
-                      };
-                    } else {
-                      gId[m.gid][i] = {type: "symbol"};
-                    }
-                  }
-                }
-              }
-
-            }
-              break;
-          }
-
-          Bus.selectedUid = this._uid;
-          this.$addcursor(this, boardType, event, i, j, k, dir, {
-            gId
+          this.$addcursor(this, boardType === 'none' ? matchBoardType : boardType, event, i, j, k, dir, {
+            symbols
           });
         }
       },
@@ -328,25 +284,157 @@
         });
         return res
       },
+
+
       /*转移焦点*/
       toNext(nextId = this.nextId) {
         if (!Bus.toNext(nextId)) { // 没有下一个输入框
           this.$closeanoahim();
         }
       },
-    },
-    computed: {
-      cp_position() {
-        let {width, height, top, left} = this.rects;
-        return {
-          // position: 'fixed',
-          // width: width + 'px',
-          // height: height + 'px',
-          // top: top + 'px',
-          // left: left + 'px',
+      /*识别符号组*/
+      matchSymbol(calcType, rightAnswers) {
+        let gId = {};
+        /*
+        *数字+符号键盘时
+        *答案中含有非数字，优先判定为符号
+        */
+        if (calcType === 'number' && Number(rightAnswers) != rightAnswers) {
+
+        } else if (calcType === 'letters') {
+          /*字母键盘时，当做都有符号处理
+          * 识别以空格区分的符号*/
+          rightAnswers.split(' ').forEach(val => {
+            let m = mathSymbol[val];
+            if (m) {
+              if (!gId[m.gid]) {
+                gId[m.gid] = {
+                  [val]: {type: "symbol"},
+                };
+              } else {
+                gId[m.gid][val] = {type: "symbol"};
+              }
+            }
+          });
 
         }
+
+        /*截取英文组成的符号*/
+        let y = rightAnswers.match(/\w+/igm) || [];
+        y.forEach(val => {
+          let m = mathSymbol[val];
+          /* // 获取英文组成的符号的组id*/
+          if (m) {
+            if (!gId[m.gid]) {
+              gId[m.gid] = {
+                [val]: {type: "symbol"},
+              };
+            } else {
+              gId[m.gid][val] = {type: "symbol"};
+            }
+          }
+        });
+        /*获取普通符号的组id*/
+        for (let i of rightAnswers) {
+          let m = mathSymbol[i];
+          if (m) {
+            if (!gId[m.gid]) {
+              gId[m.gid] = {
+                [i]: {type: "symbol"},
+              };
+            } else {
+              gId[m.gid][i] = {type: "symbol"};
+            }
+          }
+        }
+
+        return gId
       },
+    },
+    computed: {
+    },
+    mounted() {
+
+      let {subject, boardType, rightAnswers} = this,
+        gId = null,
+        required = {}, // 必须具备的符号
+        group = {},
+        calcType = null;
+      /*为传递键盘类型时，通过正确答案判断类型*/
+      if (rightAnswers) {
+        /*获取gid*/
+        switch (subject.toString()) {
+          /*学科为数学*/
+          case '2': {
+            /*若答案中含有数字，使用数字键盘*/
+            if (rightAnswers.match(/\d/im)) {
+              this.matchBoardType = 'number';
+            }
+            /*答案中没有数字且含有字母，使用英文键盘*/
+            else if (rightAnswers.match(/[a-z]/im)) {
+              this.matchBoardType = 'letters';
+            }
+            /*未指定键盘类型时，使用匹配出的键盘类型*/
+            calcType = boardType === 'none' ? this.matchBoardType : boardType;
+
+            /*获取符号组id*/
+            gId = this.matchSymbol(calcType, rightAnswers);
+          }
+            break;
+        }
+        Object.entries(gId).forEach(([k, val]) => {
+          let g = querySymbol[k] || {};
+          /*必备的符号*/
+          Object.assign(required, val);
+          /*匹配的符号组*/
+          Object.assign(group, g);
+        });
+
+        let group_keys = Object.keys(group),
+          group_length = group_keys.length,
+          required_length = Object.keys(required).length,
+          symNum = 0, // 不同键盘类型最少需要符号个数
+          minNum = 0, // 实际的最少符号个数
+          sum = null, // 干扰符号个数
+          intruder = {},
+          defaultSym = keysTextJson[boardType].data.defaultSymbol;
+        /*数字键盘时，重置符号*/
+        if (calcType === 'number') {
+          symNum = 10;
+        } else if (calcType === 'letters') {
+          /*字母键盘时*/
+          symNum = 4;
+        }
+
+        /*必备符号多于键盘符号按键，显示符号组所有符号*/
+        if (required_length > symNum) {
+          minNum = group_length;
+          intruder = group;
+        } else {
+          minNum = symNum;
+          sum = Math.min(symNum, group_length);
+          /*选择干扰符号*/
+          Array.from({length: sum}).forEach(() => {
+            let k = group_keys.splice(Math.floor(Math.random() * group_keys.length), 1)[0];
+            intruder[k] = group[k];
+          });
+        }
+
+
+        this.symbols = Object.entries(Object.assign({}, required, intruder, defaultSym)).slice(0, minNum).map(([k, itm]) => {
+          return Object.assign({}, itm, {
+            text: k,
+          })
+        });
+
+        /*打乱符号顺序*/
+        this.symbols.forEach((itm, i, arr) => {
+          let j = Math.floor(Math.random() * arr.length);
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        });
+
+      }
+
     },
     watch: {
       inputarray: {
@@ -372,7 +460,7 @@
 </script>
 
 <style lang='scss' scoped>
-  @import "./iminputdiv.scss";
+  @import "iminputdiv";
 
 
 </style>

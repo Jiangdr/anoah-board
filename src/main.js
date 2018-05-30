@@ -26,16 +26,16 @@ Vue.use(tcplayer)*/
 
 // Vue.use(qtivue.default)
 
-import Toast from './plugins/toast/toast.js'
-Vue.use(Toast);
-
-//mp3player插件依赖toast插件
-//import Mp3player from './plugins/mp3player.js'
-
-Vue.use(Mp3player,{'stopclass':'audio-preview','playclass':'audio-preview play','pauseclass':'audio-preview pause'});
+// import Toast from './plugins/toast/toast.js'
+// Vue.use(Toast);
 //
-import Mp3player from './plugins/mp3player/mp3player.js'
-Vue.use(Mp3player);
+// //mp3player插件依赖toast插件
+// //import Mp3player from './plugins/mp3player.js'
+//
+// Vue.use(Mp3player,{'stopclass':'audio-preview','playclass':'audio-preview play','pauseclass':'audio-preview pause'});
+// //
+// import Mp3player from './plugins/mp3player/mp3player.js'
+// Vue.use(Mp3player);
 
 //anoahim插件依赖toast插件
 import AnoahIM from './plugins/anoahim/anoahim.js'

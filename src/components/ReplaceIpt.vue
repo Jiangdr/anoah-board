@@ -65,52 +65,65 @@
     data() {
       return {
         lis: [
-          // {
-          //   type: 'vertical',
-          //   value: [
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //       rightAnswers: 'a + 1 ≈ 4 cm',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //   ],
-          //   name: '竖式计算',
-          // },
-          // {
-          //   type: 'takeOff',
-          //   value: [
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //     {
-          //       value: '',
-          //     },
-          //   ],
-          //   name: '脱式计算',
-          // },
           {
-            // type: 'number',
+            type: 'combo',
             value: [
               {
                 value: '',
-                right: 'a > 5 + 9 cm',
+              },
+              {
+                value: '',
+                rightAnswers: 'a + 1 ≈ 4 cm',
+              },
+            ],
+            name: '客观填空',
+          },
+          {
+            type: 'vertical',
+            value: [
+              {
+                value: '',
+              },
+              {
+                value: '',
+                rightAnswers: 'a + 1 ≈ 4 cm',
+              },
+              {
+                value: '',
+              },
+              {
+                value: '',
+              },
+              {
+                value: '',
+              },
+              {
+                value: '',
+              },
+            ],
+            name: '竖式计算',
+          },
+          {
+            type: 'takeOff',
+            value: [
+              {
+                value: '',
+              },
+              {
+                value: '',
+              },
+              {
+                value: '',
+              },
+            ],
+            name: '脱式计算',
+          },
+          {
+            type: 'number',
+            value: [
+              {
+                value: '',
+                right: 'a > 5 + 9 cm ≈ cm＜ ＞ ≠ ≤ ≥ + - =  cm dm km μm',
               },
               {
                 value: '',
@@ -118,27 +131,65 @@
               },
               {
                 value: '',
-                right: '66!',
+                right: '66',
               },
             ],
             name: '数字键盘',
           },
-
-          // {
-          //   type: 'number',
-          //   value: '',
-          //   name: '数字',
-          // },
-          // {
-          //   type: 'vertical',
-          //   value: 7,
-          //   name: '竖式',
-          // },
-          // {
-          //   type: 'letters',
-          //   value: '56/12',
-          //   name: '英文',
-          // },
+          {
+            type: 'letters',
+            value: [
+              {
+                value: '',
+                right: 'adaf cm dm km μm',
+              },
+              {
+                value: '',
+                right: '≈ cm＜ ＞ ≠ ≤ ≥ + - = ',
+              },
+              {
+                value: '',
+                right: '!',
+              },
+            ],
+            name: '英文键盘',
+          },
+          {
+            type: 'symbol',
+            value: [
+              {
+                value: '',
+                right: 'adaf cm',
+              },
+              {
+                value: '',
+                right: '≈ cm＜ ＞ ≠ ≤ ≥ + - = ',
+              },
+              {
+                value: '',
+                right: '!',
+              },
+            ],
+            name: '符号键盘',
+          },
+          {
+            type: 'chinese',
+            value: [
+              {
+                value: '',
+                right: 'a > 5 + 9 cm ≈ cm＜ ＞ ≠ ≤ ≥ + - =  cm dm km μm',
+              },
+              {
+                value: '',
+                right: '≈ cm',
+              },
+              {
+                value: '',
+                right: '66',
+              },
+            ],
+            name: '中文键盘',
+          },
         ],
         select: 0,
         num: -1,
@@ -156,7 +207,7 @@
         // if (this.select === 0 && value.length > 1) {
         //   this.lis[0].value.some((item, idx) => {
         //     let res = item.value === '';
-        //     res && toNext(idx);
+        //     res && toNext('0_' + idx);
         //     return res
         //   }) || toNext();
         // }
@@ -202,6 +253,7 @@
     border-bottom: 1px solid #8a8;
     margin-bottom: 15px;
     padding: 10px 0;
+    width: 80px;
   }
 
   .nav {

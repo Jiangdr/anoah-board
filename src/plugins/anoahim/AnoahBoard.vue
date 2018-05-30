@@ -26,10 +26,13 @@
         <div class='aimclosediv fr' v-on:click.stop='closeclick'>关闭</div>
       </div>
 
-      <component
-        :is="cp_board.compName"
-        :board-data="cp_board"
-        @btn-click="btnClick"></component>
+      <keep-alive>
+        <component
+          :is="cp_board.compName"
+          :board-data="cp_board"
+          :board-model="boardModel"
+          @btn-click="btnClick"></component>
+      </keep-alive>
 
       <!--<div-->
       <!--v-for='(value,key) in (numflag == 1 && type == 0) ? keypadjson[type].numsrc : keypadjson[type].src'-->
@@ -77,13 +80,14 @@
 
 
         isUpper: false, // 英文字符是否大写
-        boardType: 'number', // 键盘类型
+        prevBoardType: '', // 前一个键盘类型
+        boardType: '', // 键盘类型
         symbolType: 'math', // 符号类型
         nextId: '', // 下一个跳转ID
-        gId: {}, // 匹配的符号组id
+        symbols: [], // 匹配的符号组
         candidate: '', // 候选的汉字
         pinyinstr: '', // 候选拼音
-        boardModel: 'text', // 候选拼音
+        boardModel: 'chinese', // 键盘模式
       };
     },
     created: function () {
@@ -105,49 +109,61 @@
         this.hanziarray = [];
       },
       /*点击键盘*/
-      btnClick(e, {expect, text, type}) {
-        let {boardType, isUpper} = this;
+      btnClick(e, {expect, text, type, isUpper = false}) {
+        let {boardType, boardModel} = this;
         /*点击下一空*/
         if (expect === 'next') {
+          this.pinyinstr = '';
           if (!Bus.toNext(this.nextId, this.vthis.id)) { // 没有下一个输入框
             this.show = false;
             this.removecursor();
           }
           return;
         }
-        /*点击切换符号键盘*/
-        if (expect === 'showSymbol') {
-          this.boardModel = 'symbol';
-          return;
-        } else if (expect === 'goback') {
-          this.boardModel = 'text';
-          return;
+        if (boardType === 'combo') {
+          if (expect === 'languageSwitch') {
+            this.pinyinstr = '';
+            this.boardModel = this.boardModel === 'text' ? 'chinese' : 'text';
+            return
+          }
         }
+
         /*中文模式*/
-        if (boardType === 'chinese') {
+        if (boardType === 'chinese' || (boardType === 'combo' && boardModel === 'chinese')) {
           if (expect === 'delete') {
             if (this.pinyinstr !== '') {
               this.pinyinstr = this.pinyinstr.slice(0, this.pinyinstr.length - 1);
             } else {
               this.getinputstr('delete');
             }
-          } else if (expect === 'caseSwitch') {
-
+          } else if (expect === 'switch') {
+            this.prevBoardType = this.boardType;
+            this.boardType = 'symbol';
+            this.pinyinstr = '';
+            return;
+          } else if (expect === 'space') {
+            this.getinputstr(expect);
+          } else if (type === 'symbol' || isUpper) {
+            this.getinputstr(text);
           } else {
             this.pinyinstr += text;
           }
           return
-        } else if (boardType = 'letters' && isUpper && type === 'default') {
-          text = text.toUpperCase();
-        }
-        /*特殊按键*/
-        if (expect === 'caseSwitch') {
-          this.isUpper = !this.isUpper;
-          return
-        } else if (['delete', 'fraction'].includes(expect)) {
-          text = expect;
         }
 
+        /*点击切换符号键盘*/
+        if (expect === 'switch') {
+          this.prevBoardType = this.boardType;
+          this.boardType = 'symbol';
+          return;
+        } else if (expect === 'goback') {
+          this.boardType = this.prevBoardType;
+          return;
+        }
+        /*特殊按键*/
+        if (['delete', 'fraction', 'enter', 'space'].includes(expect)) {
+          text = expect;
+        }
         this.getinputstr(text);
 
       },
@@ -245,9 +261,9 @@
         return {i: -1, j: -1, k: -1, dir: -1};
       },
       //添加光标
-      addcursor: function (event, i, j, k, dir, {nextId, gId}) {
+      addcursor: function (event, i, j, k, dir, {nextId = this.nextId, symbols = this.symbols} = {}) {
         this.nextId = nextId;
-        this.gId = gId;
+        this.symbols = symbols;
         let pos = this.findcursor();
         //删除光标
         if (pos.i >= 0 && pos.j >= 0) {
@@ -475,20 +491,17 @@
       },
       //从输入法得到输入的字符
       getinputstr: function (str) {
+        console.log(str);
         let l = this.inputarray.length,
           j_l = null,
           name = null,
           temp = null,
-          i = 0,
-          j = 0,
           poolArr = ["fraction", "sqrt2", "sqrt3", "aimsup", "aimsub"];
-
-        for (; i < l; i++) {
+        for (let i = 0; i < l; i++) {
           j_l = this.inputarray[i].length;
-          for (; j < j_l; j++) {
+          for (let j = 0; j < j_l; j++) {
             temp = this.inputarray[i][j];
             name = temp.name;
-
             if (name == "cursor") {
               //光标位置插入字符
               if (poolArr.includes(str)) {
@@ -534,9 +547,6 @@
                     //再删除这一行
                     this.inputarray.splice(i, 1);
 
-                    //换行的时候重新计算滚动条高度
-
-                    this.changemainscroll();
                   }
                 } else {
                   if (this.type == 1) {
@@ -552,13 +562,13 @@
                 //换行标记
                 if (this.enterflag == 0) {
                   //只有光标的时候不允许换行
-                  if (
-                    this.inputarray[i].length == 1 &&
-                    this.inputarray[i][j].name == "cursor"
-                  ) {
-                    this.$toast("空行不能换行!");
-                    return;
-                  }
+                  // if (
+                  //   this.inputarray[i].length == 1 &&
+                  //   this.inputarray[i][j].name == "cursor"
+                  // ) {
+                  //   this.$toast("空行不能换行!");
+                  //   return;
+                  // }
                   //先增加一行
                   this.inputarray.splice(i + 1, 0, []);
                   //再将光标以后的元素挪到下一行
@@ -566,16 +576,12 @@
                   for (let k = 0; k < length; k++) {
                     this.inputarray[i + 1].unshift(this.inputarray[i].pop());
                   }
-                  //换行的时候重新计算滚动条高度
-                  this.changemainscroll();
                 } else {
                   if (this.vthis.rootdata.bookflag) {
                     for (let k = this.i + 1; k < this.inputarray.length; k++) {
                       if (this.vthis.is_correct[k] == -1) {
                         this.i = k;
                         this.addcursor(null, this.i, -1, -1, -1);
-                        //换行的时候重新计算滚动条高度
-                        this.changemainscroll();
                         break;
                       }
                     }
@@ -583,14 +589,12 @@
                     if (this.i + 1 < this.inputarray.length) {
                       this.i++;
                       this.addcursor(null, this.i, -1, -1, -1);
-                      //换行的时候重新计算滚动条高度
-                      this.changemainscroll();
                     }
                   }
                 }
               } else if (str == "space") {
                 this.insertstr(this.inputarray[i], j, " ");
-                //this.inputarray[i].splice(j, 0, { name: 'aime', value: str });
+                this.inputarray[i].splice(j, 0, {name: 'space', value: ""});
               } else if (str == "next") {
                 if (this.type == 1) {
                   let fisrti = -1;
@@ -696,28 +700,14 @@
     },
     computed: {
       cp_board() {
-        let {boardType, gId} = this,
-          keysText = keysTextJson[boardType].data,
-          matchSymbol = {
-            required: {},
-            group: {},
-          };
-        /*数字键盘时，重置符号*/
-        if (boardType === 'number') {
-          Object.entries(gId).forEach(([k, val]) => {
-            let g = querySymbol[k] || {};
-            /*必备的符号*/
-            Object.assign(matchSymbol.required, val);
-            /*匹配的符号组*/
-            Object.assign(matchSymbol.group, g);
-          });
-        }
-
-
+        let {boardType, symbols, prevBoardType} = this,
+          obj = keysTextJson[boardType] || {},
+          keysText = obj.data;
         return {
-          compName: keysTextJson[boardType].model,
+          compName: obj.model,
           keysText,
-          matchSymbol,
+          symbols,
+          prevBoardType,
         }
       },
       cp_candidate() {
@@ -906,13 +896,12 @@
       &:active {
         background: #13d098;
       }
+    }
 
-      @for $i from 3 through 10 {
-        &.k-btn-#{$i} {
-          width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
-        }
+    @for $i from 3 through 10 {
+      .k-btn-#{$i} {
+        width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
       }
-
     }
 
     .k-symbol, .k-space {
@@ -986,10 +975,10 @@
         & + .k-btn {
           margin-left: $interval;
         }
-        @for $i from 3 through 10 {
-          &.k-btn-#{$i} {
-            width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
-          }
+      }
+      @for $i from 3 through 10 {
+        .k-btn-#{$i} {
+          width: calc((100% - #{$interval} * #{$i - 1}) / #{$i});
         }
       }
 

@@ -2,58 +2,26 @@
   <div class="k-btn-wrap">
     <transition-group
       name='fade'>
-      <div class="clear-fix k-btn-box" v-show="model === 'text'" key="text">
+      <div class="clear-fix k-btn-box" key="text">
         <ul class="fl num-ul" :style="cp_left">
           <li
-            v-for="(row, idx) in keysText.ordinary"
+            v-for="(row, idx) in cp_ordinary"
             :key="idx"
             class="clear-fix k-row"
-            :class="{['k-row-' + keysText.ordinary.length]: 1}">
+            :class="{['k-row-' + cp_ordinary.length]: 1}">
         <span
           class="fl k-btn"
           v-for="(btn, i) in row"
           @click.stop="$emit('btn-click', $event, btn)"
           :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
-          :key="i">{{(isUpper && btn.type === 'default') && btn.text.toUpperCase() || btn.text}}</span>
-          </li>
-        </ul>
-        <ul class="fr sym-ul sym-pad" :style="cp_right">
-          <li
-            class="k-row"
-            :class="{['k-row-' + keysText.large.length]: 1}"
-            v-for="(row, idx) in keysText.large"
-            :key="idx">
-        <span
-          class="k-btn"
-          :class="{['k-' + btn.type]: 1, ['k-btn-' + row.length]: 1}"
-          v-for="(btn, i) in row"
-          @click.stop="$emit('btn-click', $event, btn)"
           :key="i">{{btn.text}}</span>
           </li>
         </ul>
-      </div>
-      <!--符号类-->
-      <div class="clear-fix sym-aside" v-show="model === 'symbol'" key="symbol">
-        <ul class="fl num-ul" :style="cp_left">
-          <li
-            v-for="(row, idx) in symbolsText.ordinary"
-            :key="idx"
-            class="clear-fix k-row"
-            :class="{['k-row-' + symbolsText.ordinary.length]: 1}">
-        <span
-          class="fl k-btn k-symbol"
-          v-for="(btn, i) in row"
-          @click.stop="$emit('btn-click', $event, btn)"
-          :class="{['k-btn-' + row.length]: 1}"
-          :key="i">{{(isUpper && btn.type === 'default') && btn.text.toUpperCase() || btn.text}}</span>
-          </li>
-        </ul>
-
         <ul class="fr sym-ul sym-pad" :style="cp_right">
           <li
             class="k-row"
-            v-for="(row, idx) in symbolsText.large"
-            :class="{['k-row-' + symbolsText.large.length]: 1}"
+            :class="{['k-row-' + cp_large.length]: 1}"
+            v-for="(row, idx) in cp_large"
             :key="idx">
         <span
           class="k-btn"
@@ -89,28 +57,14 @@
   //region    //export
 
   export default {
-    name: 'BoardModul',
+    name: 'TheConstant',
     data() {
       return {}
     },
     props: {
-      keysText: {
+      boardData: {
         type: Object,
         required: true,
-      },
-      symbolsText: {
-        type: Object,
-        default() {
-          return {}
-        },
-      },
-      isUpper: {
-        type: Boolean,
-        default: false,
-      },
-      model: {
-        type: String,
-        default: 'text',
       },
     },
     mounted,
@@ -120,14 +74,20 @@
     },
     computed: {
       cp_right() {
-        return this.keysText.large && {
+        return this.cp_large && {
           width: '20%',
         }
       },
       cp_left() {
-        return this.keysText.large && {
+        return this.cp_large && {
           width: '80%',
         }
+      },
+      cp_ordinary() {
+        return this.boardData.keysText.ordinary
+      },
+      cp_large() {
+        return this.boardData.keysText.large
       },
     },
   }
@@ -141,7 +101,6 @@
    *组件挂载成功执行函数
    */
   function mounted() {
-    Bus.$on('btn-click', this.btnClick)
   }
 
   //endregion
